@@ -1,0 +1,155 @@
+msgid "Ciutat de Barcelona"
+msgstr "City of Barcelona"
+
+msgid "Cercador d'arbres"
+msgstr "Tree search"
+
+msgid "Àrbres de Barcelona"
+msgstr "Trees of Barcelona"
+
+msgid "Inici"
+msgstr "Home"
+
+msgid "Inicia Sessió"
+msgstr "Log in"
+
+msgid "Registrar-se"
+msgstr "Sign up"
+
+msgid "Usuari"
+msgstr "User"
+
+msgid "Idioma"
+msgstr "Language"
+
+msgid "Català"
+msgstr "Catalan" 
+
+msgid "Castellà"
+msgstr "Spanish"
+
+msgid "Anglès"
+msgstr "English"
+
+msgid "Notícies"
+msgstr "News"
+
+msgid "Àrbres"
+msgstr "Trees"
+
+msgid "Fulla caduca"
+msgstr "Expires leaf"
+
+msgid "Fulla perenne"
+msgstr "Evergreen leaf"
+
+msgid "Costa"
+msgstr "Coast"
+
+msgid "Interior"
+msgstr "Interior"
+
+msgid "Muntanya"
+msgstr "Mountain"
+
+msgid "Tots"
+msgstr "All"
+
+msgid "Buscar"
+msgstr "Search"
+
+msgid "Els arbres de Barcelona"
+msgstr "The trees of Barcelona"
+
+msgid "Descobreix la seva bellesa i biodiversitat"
+msgstr "Discover its beauty and biodiversity"
+
+msgid "Barcelona és una ciutat coneguda per la seva rica història, la seva arquitectura impressionant i la seva cultura vibrant, però els seus espais verds i arbres també juguen un paper crucial en la configuració de la seva identitat. Amb més de 200 espècies diferents, el bosc urbà de la ciutat proporciona ombra, millora la qualitat de l'aire i millora la biodiversitat. Arbres emblemàtics com el plàtan (Platanus hispanica), el jacarandà i les palmeres recorren els seus carrers i parcs, creant un paisatge mediterrani únic. Llocs com el Parc de la Ciutadella i Montjuïc acullen una vegetació exuberant, que ofereix una escapada natural dins de la bulliciosa ciutat. El compromís de Barcelona amb la sostenibilitat garanteix que els seus arbres segueixin sent una part vital del seu encant urbà."
+msgstr "Barcelona is a city known for its rich history, impressive architecture and vibrant culture, but its green spaces and trees also play a crucial role in shaping its identity. With over 200 different species, the city's urban forest provides shade, improves air quality and enhances biodiversity. Iconic trees such as the plane tree (Platanus hispanica), jacaranda and palm trees line its streets and parks, creating a unique Mediterranean landscape. Places such as Parc de la Ciutadella and Montjuïc are home to lush vegetation, offering a natural escape from the bustling city. Barcelona's commitment to sustainability ensures that its trees remain a vital part of its urban charm."
+
+msgid "Buscador per característiques"
+msgstr "Search engine by features"
+
+msgid "Ubicació"
+msgstr "Location"
+
+msgid "Alçada"
+msgstr "Height"
+
+msgid "Capçada"
+msgstr "Catch"
+
+msgid "Tipus de fulla"
+msgstr "Leaf type"
+
+msgid "Totes"
+msgstr "All"
+
+msgid "Qualsevol"
+msgstr "All"
+
+msgid "Zones pavimentades"
+msgstr "Paved areas"
+
+msgid "Baixa (menys de 6 m)"
+msgstr "Low (less than 6 m)"
+
+msgid "Estreta (de 2 a m de diàmetre)"
+msgstr "Narrow (from 2 to m in diameter)"
+
+msgid "Caduca"
+msgstr "Expires"
+
+msgid "Zones verdes"
+msgstr "Green areas"
+
+msgid "Mitjana (de 6 a 15 m)"
+msgstr "Medium (from 6 to 15 m)"
+
+msgid "Mitjana (de 4 a 6 m de diàmetre)"
+msgstr "Medium (4 to 6 m in diameter)"
+
+msgid "Perenne"
+msgstr "Perennial"
+
+msgid "Alta (més de 15 m)"
+msgstr "High (over 15 m)"
+
+msgid "Ampla (de 6 a 8 m de diàmetre)"
+msgstr "Wide (6 to 8 m in diameter)"
+
+msgid "Molt ampla (més de 8 m de diàmetre)"
+msgstr "Very wide (more than 8 m in diameter)"
+
+msgid "Gènere"
+msgstr "Genre"
+
+msgid "o"
+msgstr "or"
+
+msgid "Nom comú"
+msgstr "Common name"
+
+msgid "Últimes Notícies"
+msgstr "Latest News"
+
+msgid "Les espècies que predominen a la ciutat condal"
+msgstr "The species that predominate in the city of Barcelona"
+
+msgid "L'arbre que més predomina a la ciutat és el plataner comú (Platanus x acerifolia) amb un 35%..."
+msgstr "The most predominant tree in the city is the common plane tree (Platanus x acerifolia) with 35%..."
+
+msgid "Llegir més"
+msgstr "Read more"
+
+msgid "El Laberint d'Horta: un oasis verd a Barcelona"
+msgstr "The Labyrinth of Horta: a green oasis in Barcelona"
+
+msgid "Format per aproximadament 750 xiprers i més de 16 espècies d'animals..."
+msgstr "Made up of approximately 750 cypress trees and more than 16 species of animals..."
+
+msgid "Els taronjers, un problema pels carrers de la ciutat"
+msgstr "Orange trees, a problem on the city streets"
+
+msgid "Les plagues i la caiguda de la fruita genera brutícia als carrers. Les solucions..."
+msgstr "Pests and fruit fall generate dirt on the streets. The solutions..."

@@ -1,0 +1,152 @@
+msgid "Ciutat de Barcelona"
+msgstr "Ciudad Barcelona"
+
+msgid "Cercador d'arbres"
+msgstr "Buscador de árboles"
+
+msgid "Àrbres de Barcelona"
+msgstr "Árboles de Barcelona"
+
+msgid "Inici"
+msgstr "Inicio"
+
+msgid "Usuari"
+msgstr "Usuario"
+
+msgid "Inicia Sessió"
+msgstr "Iniciar Sesión"
+
+msgid "Registrar-se"
+msgstr "Registrarse"
+
+msgid "Idioma"
+msgstr "Idioma"
+
+msgid "Català"
+msgstr "Catalán"
+
+msgid "Castellà"
+msgstr "Español"
+
+msgid "Anglès"
+msgstr "Inglés"
+
+msgid "Notícies"
+msgstr "Noticias"
+
+msgid "Àrbres"
+msgstr "Árboles"
+
+msgid "Fulla caduca"
+msgstr "Hoja caduca"
+
+msgid "Fulla perenne"
+msgstr "Hoja perenne"
+
+msgid "Costa"
+msgstr "Costa"
+
+msgid "Interior"
+msgstr "Interior"
+
+msgid "Muntanya"
+msgstr "Montaña"
+
+msgid "Tots"
+msgstr "Todos"
+
+msgid "Buscar"
+msgstr "Buscar"
+
+msgid "Els arbres de Barcelona"
+msgstr "Los árboles de Barcelona"
+
+msgid "Descobreix la seva bellesa i biodiversitat"
+msgstr "Descubre su belleza i su biodiversidad"
+
+msgid "<strong>Barcelona</strong> és una ciutat coneguda per la seva rica història, la seva arquitectura impressionant i la seva cultura vibrant, però els seus espais verds i arbres també juguen un paper crucial en la configuració de la seva identitat. Amb <strong>més de 200 espècies diferents</strong>, el bosc urbà de la ciutat proporciona ombra, millora la qualitat de l'aire i millora la biodiversitat. Arbres emblemàtics com elplàtan (<i>Platanus hispanica</i>), el jacarandà i les palmeres recorren els seus carrers i parcs, creant un paisatge mediterrani únic. Llocs com el Parc de la Ciutadella i Montjuïc acullen una vegetació exuberant, que ofereix una escapada natural dins de la bulliciosa ciutat. El compromís de Barcelona amb la sostenibilitat garanteix que els seus arbres segueixin sent una <strong>part vital del seu encant urbà</strong>."
+msgstr "<strong>Barcelona</strong> es una ciudad conocida por su rica historia, su arquitectura impresionante y su cultura vibrante, pero sus espacios verdes y árboles también juegan un papel crucial en la configuración de su identidad. Con <strong>más de 200 especies diferentes</strong>, el bosque urbano de la ciudad proporciona sombra, mejora la calidad del aire y mejora la biodiversidad. Árboles emblemáticos como el plátano (<i>Platanus hispanica</i>), el jacarandano y las palmeras recorren los suyos calles y parques, creando un paisaje mediterráneo único. Lugares como el Parque de la Ciutadella y Montjuïc acogen una vegetación exuberante, que ofrece una escapada natural dentro de la bulliciosa ciudad. El compromiso de Barcelona con la sostenibilidad garantiza que sus árboles sigan siendo una <strong>parte vital de su encanto urbano</strong>."
+
+msgid "Buscador per característiques"
+msgstr "Buscador por características"
+
+msgid "Ubicació"
+msgstr "Ubicación"
+
+msgid "Alçada"
+msgstr "Altura"
+
+msgid "Capçada"
+msgstr "Copa"
+
+msgid "Tipus de fulla"
+msgstr "Tipos de hoja"
+
+msgid "Totes"
+msgstr "Todas"
+
+msgid "Qualsevol"
+msgstr "Cualquiera"
+
+msgid "Zones pavimentades"
+msgstr "Zonas pavimentadas"
+
+msgid "Baixa (menys de 6 m)"
+msgstr "Baja (menos de 6 m)"
+
+msgid "Estreta (de 2 a m de diàmetre)"
+msgstr "Estrecha (de 2 m de diámetro)"
+
+msgid "Caduca"
+msgstr "Caduca"
+
+msgid "Zones verdes"
+msgstr "Zonas verdes"
+
+msgid "Mitjana (de 6 a 15 m)"
+msgstr "Media (de 6 a 15 m)"
+
+msgid "Mitjana (de 4 a 6 m de diàmetre)"
+msgstr "Media (de 4 a 6 m de diámetro)"
+
+msgid "Perenne"
+msgstr "Perenne"
+
+msgid "Alta (més de 15 m)"
+msgstr "Alta (más de 15 m)"
+
+msgid "Ampla (de 6 a 8 m de diàmetre)"
+msgstr "Ancho (de 6 a 8 m de diámetro)"
+
+msgid "Molt ampla (més de 8 m de diàmetre)"
+msgstr "Muy ancho (más de 8 m de diámetro)"
+
+msgid "Gènere"
+msgstr "Género"
+
+msgid "Nom comú"
+msgstr "Nombre común"
+
+msgid "Últimes Notícies"
+msgstr "Últimas Noticias"
+
+msgid "Les espècies que predominen a la ciutat condal"
+msgstr "Las especies que predominan en la ciudad condal"
+
+msgid "L'arbre que més predomina a la ciutat és el plataner comú (Platanus x acerifolia) amb un 35%..."
+msgstr "El árbol que más predomina en la ciudad es el platanero común (Platanus x acerifolia) con un 35%..."
+
+msgid "Llegir més"
+msgstr "Leer más"
+
+msgid "El Laberint d'Horta: un oasis verd a Barcelona"
+msgstr "El Laberinto de Horta: un oasis verde en Barcelona"
+
+msgid "Format per aproximadament 750 xiprers i més de 16 espècies d'animals..."
+msgstr "Compuesto por aproximadamente 750 cipreses y más de 16 especies de animales..."
+
+msgid "Els taronjers, un problema pels carrers de la ciutat"
+msgstr "Los naranjos, un problema para las calles de la ciudad"
+
+msgid "Les plagues i la caiguda de la fruita genera brutícia als carrers. Les solucions..."
+msgstr "Las plagas y la caída de la fruta genera suciedad en las calles. Las soluciones..."

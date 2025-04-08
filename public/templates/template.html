@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tipo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/test.css">
+    <!-- Data -->
+    <link rel="icon" href="/img/test.ico">
+    <title>La Receta Mágica | Template</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    {% include '/navbar.html' %}
+
+    <div class="container-fluid position-relative p-0">
+        <!-- Imagen de fondo -->
+        <div class="bg-image" style="background-image: url('/img/mohif.jpg'); background-size: cover; background-position: center; height: 500px;"></div>
+  
+        <!-- Texto superpuesto -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-end">
+            <div class="container">
+                <div class="col-md-6 p-5 rounded text-white">
+                    <h1 class="display-4">Desafio del mes:</h1>
+                    <p class="lead">Bebidas refrescantes para el verano</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Footer -->
+    {% include '/footer.html' %}
+  
+    <!-- Bootstrap Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <!-- Burger-X Script -->
+    <script>
+        const toggler = document.querySelector('.custom-toggler');
+        const navbar = document.getElementById('navbarSupportedContent');
+      
+        toggler.addEventListener('click', () => {
+            toggler.classList.toggle('open');
+        });
+    </script>
+    <script>
+        document.addEventListener('click', function (event) {
+            const isClickInside = navbar.contains(event.target) || toggler.contains(event.target);
+            if (!isClickInside && navbar.classList.contains('show')) {
+                toggler.click();
+            }
+        });
+    </script>
+</body>
+</html>

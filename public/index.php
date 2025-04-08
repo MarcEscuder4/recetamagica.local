@@ -56,6 +56,9 @@ if (preg_match('/^\/pajaros\/(\d+)$/', $request, $matches)) {
         case '/test':
             require __DIR__ . $viewDir . 'test.php';
             break;
+        case '/example':
+            require __DIR__ . $viewDir . 'example.php';
+            break;
         case 'not-found':
             default:
                 http_response_code(404);

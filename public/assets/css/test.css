@@ -1,0 +1,151 @@
+/* Typo Style */
+body {
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sigmar';
+}
+
+p {
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
+}
+  
+.walter-turncoat-regular {
+    font-family: "Walter Turncoat";
+    font-weight: 400;
+    font-style: normal;
+}
+
+.sigmar-regular {
+    font-family: "Sigmar", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.text_content {
+    font-size: 1.5rem;
+}
+
+/* Buttons Style */
+.btn-pastel {
+    background-color: #F8C8DC;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-pastel:hover {
+    background-color: #FF6F91;
+    color: #fff;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);
+    outline: none;
+}
+
+/* Links Style */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #FF6F91;
+}
+
+i {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+i:hover {
+    color: #FF6F91;
+    transform: scale(1.15);
+}
+
+.link_amp {
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+  
+.link_amp:hover {
+    color: #FF6F91;
+}
+
+.footy {
+    color: white !important;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .footy:hover {
+    color: #FF6F91 !important;
+    transform: scale(1.15);
+  }
+
+  /* Desplegable Style */
+.dropdown-menu .dropdown-item:hover {
+    background-color: #ffd1ea;
+    color: #000;
+}
+
+  /* Navbar Burger-X Style */
+.custom-toggler .toggler-icon {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-toggler .toggler-icon::before,
+.custom-toggler .toggler-icon::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-toggler .toggler-icon::before {
+    top: -10px;
+}
+
+.custom-toggler .toggler-icon::after {
+    top: 10px;
+}
+
+/* When menu is open (show) */
+.custom-toggler.open .toggler-icon {
+    background-color: transparent;
+}
+
+.custom-toggler.open .toggler-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.custom-toggler.open .toggler-icon::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+.custom-toggler {
+  border: none;
+  box-shadow: none;
+  outline: none !important;
+}
+
+.custom-toggler:focus {
+  box-shadow: none;
+  outline: none !important;
+}

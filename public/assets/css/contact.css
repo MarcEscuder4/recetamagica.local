@@ -1,5 +1,5 @@
 /* Typo Style */
-body {
+body, option {
     font-family: "Walter Turncoat";
     font-size: 1rem;
 }
@@ -29,6 +29,10 @@ p {
     font-size: 1.5rem;
 }
 
+.form-select {
+    font-family: 'Walter Turncoat', cursive;
+}
+  
 /* Buttons Style */
 .btn-pastel {
     background-color: #F8C8DC;
@@ -108,7 +112,7 @@ i:hover {
 
   /* Desplegable Style */
 .dropdown-menu .dropdown-item:hover {
-    background-color: #ffd1ea;
+    background-color: #F8C8DC;
     color: #000;
 }
 

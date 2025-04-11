@@ -2,6 +2,7 @@
 // Carga Twig
 require_once __DIR__ . '/../../config/twig.php';
 
+/*
 //Verificació d'usuari connectat
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = htmlspecialchars($_POST["username"]);
@@ -32,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 }
+    */
 
 // Renderitzar la plantilla
 echo $twig->render('login.html');

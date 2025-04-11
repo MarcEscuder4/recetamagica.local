@@ -1,0 +1,175 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <!-- Tipo -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
+        
+        <!-- reCAPTCHA -->
+        <script src="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMI32Z0f_0fR8rzj"></script>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../assets/css/contact.css">
+        <!-- Data -->
+        <link rel="icon" href="/img/LRM.ico">
+        <title>La Receta Mágica | Contacto</title>
+    </head>
+
+    <body>
+        <?php
+        if (isset($_SESSION['error'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['error'] . "</div>";
+            unset($_SESSION['error']);
+        }
+    
+        if (isset($_SESSION['success'])) {
+            echo "<div class='alert alert-success'>" . $_SESSION['success'] . "</div>";
+            unset($_SESSION['success']);
+        }
+        ?>
+
+        <!-- Navbar -->
+        {% include '/navbar.html' %}
+
+        <br>
+    
+        <!-- Contenido -->
+        <div class="container mt-5 mb-5">
+            <div class="container mt-5 mb-5">
+                {% if error %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <h1 class="text-black fw-bold">{{ "Contacto" | gettext }}</h1>
+                <a href="/formulari" class="register">
+                    <h2 class="text-muted fs-5">{{ "Te responderemos en el menor tiempo posible" | gettext }}</h2>
+                </a>
+            </div>
+            <div>
+                <!-- Uso de reCAPTCHA con claves de prueba -->
+                <!-- AFEGIR A ACTION A ON S'ENVIARÀN LES DADES DEL FORM PER PROCESSAR-LES (ex. procesar_contacto.php)-->
+                <form action="" method="post" id="contactForm">
+                    <div class="mb-3">
+                        <label for="motivo" class="form-label">Motivo del Contacto</label>
+                        <select class="form-select" id="motivo" name="motivo" required>
+                            <option value="" disabled selected>Selecciona un motivo</option>
+                            <option value="duda">Tengo una duda</option>
+                            <option value="sugerencia">Quiero hacer una sugerencia</option>
+                            <option value="problema">Encontré un problema</option>
+                            <option value="colaboracion">Me gustaría colaborar</option>
+                            <option value="otro">Otro motivo</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nombre</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Nombre o Empresa" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Número de Teléfono</label>
+                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ej: 612345678" pattern="[67][0-9]{8}" required>
+                        <div class="form-text invalid-feedback" id="telefonoError">
+                            Introduce un número válido de 9 cifras sin espacios ni guiones.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="preferencia" class="form-label">Preferencia de Respuesta</label>
+                        <select class="form-select" id="preferencia" name="preferencia" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="telefono">Teléfono</option>
+                            <option value="email">Correo electrónico</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Introduce tu mensaje aquí" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="acepto" name="acepto" required>
+                        <label class="form-check-label" for="acepto">
+                            Acepto la <a href="/politica-privacidad" target="_blank">política de privacidad</a>.
+                        </label>
+                    </div>
+                    <div class="col-12 mb-3 d-flex justify-content-end gap-3">
+                        <button type="reset" class="btn btn-outline-dark">{{ "Limpiar" | gettext }}</button>
+                        <button type="submit" class="btn btn-pastel">{{ "Enviar" | gettext }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Google reCAPTCHA para web pública
+        Inserta esta clave de sitio en el código HTML que utiliza tu sitio.
+        6Ld5_RMrAAAAALFDKDx52LzMeipgv7AG6Lft0YJs
+
+        Utiliza esta clave secreta para la comunicación entre tu sitio y reCAPTCHA:
+        6Ld5_RMrAAAAACvOIbVTucsl-gBXS-vsP-D1OsAc
+        -->
+
+        <br><br>
+
+        <!-- Footer -->
+        {% include '/footer.html' %}
+
+    <!-- reCAPTCHA -->
+    <script>
+        // Al enviar el formulario, ejecutamos reCAPTCHA v3 para obtener el token
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el envío del formulario de inmediato
+
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LeIxAcTAAAAAJcZVRqyHh71UMI32Z0f_0fR8rzj', {action: 'submit'}).then(function(token) {
+                    // Crear un campo oculto con el token de reCAPTCHA
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'recaptcha_response';
+                    input.value = token;
+                    document.getElementById('contactForm').appendChild(input);
+                    
+                    // Ahora podemos enviar el formulario
+                    document.getElementById('contactForm').submit();
+                });
+            });
+        });
+    </script>
+
+    <!-- Scripts de Bootstrap: Asegúrate de cargarlos al final para que funcionen correctamente -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Validación personalizada con JavaScript -->
+    <script>
+        document.getElementById("telefono").addEventListener("input", function(event) {
+            // Solo permite números (reemplaza cualquier cosa que no sea un número)
+            event.target.value = event.target.value.replace(/\D/g, '');
+        });
+
+        // Validación en tiempo real para mostrar el mensaje de error de teléfono si es inválido
+        const telefonoInput = document.getElementById("telefono");
+        const telefonoError = document.getElementById("telefonoError");
+
+        telefonoInput.addEventListener("invalid", function () {
+            telefonoError.style.display = "block";
+        });
+
+        telefonoInput.addEventListener("input", function () {
+            telefonoError.style.display = "none";
+        });
+    </script>
+    </body>
+</html>

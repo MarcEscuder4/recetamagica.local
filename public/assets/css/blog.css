@@ -1,0 +1,58 @@
+/* Typo Style */
+body {
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sigmar';
+}
+
+p {
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
+}
+  
+.walter-turncoat-regular {
+    font-family: "Walter Turncoat";
+    font-weight: 400;
+    font-style: normal;
+}
+
+.sigmar-regular {
+    font-family: "Sigmar", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.text_content {
+    font-size: 1.5rem;
+}
+
+/* Estilo para el sidebar */
+#sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 56px; /* Ajustar para que el sidebar no se superponga con el navbar */
+  left: 0;
+  width: 250px;
+  background-color: #f8f9fa;
+  padding-top: 20px;
+  z-index: 1;
+}
+#content {
+  margin-left: 260px;
+  padding: 20px;
+}
+.sidebar-item {
+  cursor: pointer;
+  padding: 10px;
+  text-align: left;
+}
+.sidebar-item:hover {
+  background-color: #f1f1f1;
+}
+/* Aseguramos que el navbar esté encima del sidebar */
+.navbar {
+  z-index: 10;
+}

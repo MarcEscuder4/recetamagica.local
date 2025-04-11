@@ -38,21 +38,33 @@ if (preg_match('/^\/pajaros\/(\d+)$/', $request, $matches)) {
         case '/':
             require __DIR__ . $viewDir . 'home.php';
             break;
+        case '/form':
+            require __DIR__ . $viewDir . 'form.php';
+            break;
         case '/login':
-            if (SessionController::isLoggedIn()) {
-                redirect("/admin");
-                break;
-            } else {
+            // if (SessionController::isLoggedIn()) {
+                // redirect("/admin");
+                //break;
+            // } else {
                 require __DIR__ . $viewDir . 'login.php';
                 break;
-            } 
-        case '/admin':
-            if (SessionController::isLoggedIn()) {
-                require __DIR__ . $viewDir . 'adminDashboard.php';
-            } else {
-                redirect("/");
-            }
+            // } 
+        //case '/admin':
+            // if (SessionController::isLoggedIn()) {
+                // require __DIR__ . $viewDir . 'adminDashboard.php';
+            // } else {
+                // redirect("/");
+            // }
+            // break;
+        case '/blog':
+            require __DIR__ . $viewDir . 'blog.php';
             break;
+        case '/contacto':
+            require __DIR__ . $viewDir . 'contact.php';
+            break; 
+        case '/desafios':
+            require __DIR__ . $viewDir . 'desafios.php';
+            break;   
         case '/test':
             require __DIR__ . $viewDir . 'test.php';
             break;

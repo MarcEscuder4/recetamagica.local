@@ -108,7 +108,7 @@ i:hover {
 
   /* Desplegable Style */
 .dropdown-menu .dropdown-item:hover {
-    background-color: #ffd1ea;
+    background-color: #F8C8DC;
     color: #000;
 }
 
@@ -188,3 +188,10 @@ input.form-control.input-pastel:focus {
 .bg-color-all {
     background-color: #FF6F91;
 }
+
+/* Check de recordarme */
+.custom-checkbox .form-check-input:checked {
+    background-color: #FF6F91;
+    border-color: #FF6F91;
+}
+  

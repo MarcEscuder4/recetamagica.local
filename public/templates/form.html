@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tipo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/test.css">
+    <!-- Data -->
+    <link rel="icon" href="/img/rm.ico">
+    <title>La Receta Mágica | Formulari</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    {% include '/navbar.html' %}
+
+    <!-- Content -->
+    <form action="/ruta-de-registro" method="POST" enctype="multipart/form-data">
+<div class="container mt-5 mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="text-black fw-bold">Formulario de registro</h1>
+            <h2 class="text-muted fs-5">¡Bienvenidos a La Receta Mágica!</h2>
+        </div>
+        <div class="col-md-4 d-flex justify-content-end">
+            <img src="../img/profile.png" alt="Foto de perfil" class="rounded-circle" width="120" height="120">
+        </div>
+    </div>
+
+    <br><hr class="dropdown-divider"><br>
+
+    <!-- Aquí empieza el formulario dentro del mismo container -->
+    <form action="/ruta-de-registro" method="POST" enctype="multipart/form-data">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control required" id="floatingUser">
+        <label for="floatingUser">Usuario</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control required" id="floatingInput">
+        <label for="floatingInput">Correo electrónico</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control required" id="floatingPassword">
+        <label for="floatingPassword">Contraseña</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control required" id="floatingConfirmPassword">
+        <label for="floatingConfirmPassword">Confirmar contraseña</label>
+    </div>
+
+    <br><hr class="dropdown-divider"><br>
+
+    <div class="mb-3">
+        <label for="fechaNacimiento" class="form-label required">Fecha de Nacimiento</label>
+        <input type="date" id="fechaNacimiento" class="form-control">
+    </div>
+
+    <div>
+        <label for="exampleInputPassword1" class="form-label">Género</label>
+        <select class="form-select" aria-label="Default select example">
+            <option value="1">Mujer</option>
+            <option value="2">Hombre</option>
+            <option value="3" selected>Prefiero no contestar</option>
+        </select>
+    </div>
+
+    <br><hr class="dropdown-divider"><br>
+
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Foto de perfil</label>
+        <input class="form-control" type="file" id="formFile">
+    </div>
+
+    <br><hr class="dropdown-divider"><br>
+
+    <div class="col-12 mb-3 d-flex justify-content-end">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+                Confirmar los cambios
+            </label>
+            <div class="invalid-feedback">
+                Para poder aplicar los cambios primero debe confirmar la casilla.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mb-3 d-flex justify-content-end">
+        <button class="btn btn-outline-dark me-3" type="reset">Limpiar</button>
+        <button class="btn btn-pastel" type="submit">Registrarse</button>
+    </div>
+
+
+</div>
+</form>
+<br><br>
+
+
+    <!-- Footer -->
+    {% include '/footer.html' %}
+  
+    <!-- Scripts de Bootstrap: Asegúrate de cargarlos al final para que funcionen correctamente -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        const toggler = document.querySelector('.custom-toggler');
+        const navbar = document.getElementById('navbarSupportedContent');
+      
+        toggler.addEventListener('click', () => {
+          toggler.classList.toggle('open');
+        });
+      </script>
+      <script>
+        document.addEventListener('click', function (event) {
+          const isClickInside = navbar.contains(event.target) || toggler.contains(event.target);
+          if (!isClickInside && navbar.classList.contains('show')) {
+            toggler.click(); // Trigger collapse
+          }
+        });
+      </script>
+</body>
+</html>

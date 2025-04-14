@@ -16,7 +16,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/css/test.css">
     <!-- Data -->
-    <link rel="icon" href="/img/rm.ico">
+    <link rel="icon" href="/img/hatpng.ico">
     <title>La Receta Mágica | Formulari</title>
 </head>
 
@@ -41,71 +41,81 @@
 
     <!-- Aquí empieza el formulario dentro del mismo container -->
     <form action="/ruta-de-registro" method="POST" enctype="multipart/form-data">
-    <div class="form-floating mb-3">
-        <input type="text" class="form-control required" id="floatingUser">
-        <label for="floatingUser">Usuario</label>
-    </div>
-
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control required" id="floatingInput">
-        <label for="floatingInput">Correo electrónico</label>
-    </div>
-
-    <div class="form-floating mb-3">
-        <input type="password" class="form-control required" id="floatingPassword">
-        <label for="floatingPassword">Contraseña</label>
-    </div>
-
-    <div class="form-floating mb-3">
-        <input type="password" class="form-control required" id="floatingConfirmPassword">
-        <label for="floatingConfirmPassword">Confirmar contraseña</label>
-    </div>
-
-    <br><hr class="dropdown-divider"><br>
-
-    <div class="mb-3">
-        <label for="fechaNacimiento" class="form-label required">Fecha de Nacimiento</label>
-        <input type="date" id="fechaNacimiento" class="form-control">
-    </div>
-
-    <div>
-        <label for="exampleInputPassword1" class="form-label">Género</label>
-        <select class="form-select" aria-label="Default select example">
-            <option value="1">Mujer</option>
-            <option value="2">Hombre</option>
-            <option value="3" selected>Prefiero no contestar</option>
-        </select>
-    </div>
-
-    <br><hr class="dropdown-divider"><br>
-
-    <div class="mb-3">
-        <label for="formFile" class="form-label">Foto de perfil</label>
-        <input class="form-control" type="file" id="formFile">
-    </div>
-
-    <br><hr class="dropdown-divider"><br>
-
-    <div class="col-12 mb-3 d-flex justify-content-end">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-            <label class="form-check-label" for="invalidCheck">
-                Confirmar los cambios
-            </label>
-            <div class="invalid-feedback">
-                Para poder aplicar los cambios primero debe confirmar la casilla.
+        <div class="form-floating mb-3">
+            <div class="mb-3">
+                <label for="username" class="form-label">Nombre de Usuario</label>
+                <input type="text" class="form-control required" id="username" placeholder="Username">
             </div>
         </div>
+        <div class="form-floating mb-3">
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control required" id="email" placeholder="username@email.com">
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control required" id="password">
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                <input type="password" class="form-control required" id="confirmPassword">
+            </div>
+        </div>
+
+        <br>
+        <hr class="dropdown-divider">
+        <br>
+
+        <div class="mb-3">
+            <label for="fechaNacimiento" class="form-label required">Fecha de Nacimiento</label>
+            <input type="date" id="fechaNacimiento" class="form-control">
+        </div>
+        <div>
+            <label for="exampleInputPassword1" class="form-label">Género</label>
+            <select class="form-select" aria-label="Default select example">
+                <option value="1">Mujer</option>
+                <option value="2">Hombre</option>
+                <option value="3" selected>Prefiero no contestar</option>
+            </select>
+        </div>
+
+        <br>
+        <hr class="dropdown-divider">
+        <br>
+
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Foto de perfil</label>
+            <input class="form-control" type="file" id="formFile">
+        </div>
+
+        <br>
+        <hr class="dropdown-divider">
+        <br>
+
+        <div class="col-12 mb-3 d-flex justify-content-end">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">
+                    Confirmar los cambios
+                </label>
+                <div class="invalid-feedback">
+                    Para poder aplicar los cambios primero debe confirmar la casilla.
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-3 d-flex justify-content-end">
+            <button class="btn btn-outline-dark me-3" type="reset">Limpiar</button>
+            <button class="btn btn-pastel" type="submit">Registrarse</button>
+        </div>
+
+
     </div>
-
-    <div class="col-12 mb-3 d-flex justify-content-end">
-        <button class="btn btn-outline-dark me-3" type="reset">Limpiar</button>
-        <button class="btn btn-pastel" type="submit">Registrarse</button>
-    </div>
-
-
-</div>
-</form>
+    </form>
 <br><br>
 
 

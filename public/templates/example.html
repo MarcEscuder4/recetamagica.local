@@ -21,17 +21,45 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    {% include '/navbar.html' %}
+  <!-- Navbar -->
+  {% include '/navbar.html' %}
 
-    <!-- Caroussel -->
-    {% include 'caroussel.html' %}
+  {% include 'caroussel.html' %}
+  
 
+  <!-- Imagen de fondo 
+    <div class="container-fluid position-relative p-0">
+     
+        <div class="bg-image" style="background-image: url('/img/fc.png'); background-size: cover; background-position: center; height: 500px;"></div>
+  
+        
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-end">
+            <div class="container">
+                <div class="col-md-6 p-5 rounded text-white texto-borde-negro">
+                    <h1 class="display-4">
+                        <a href="/desafio/kfc" class="link_amp">¡Desafío KENTUCKY FRIED CHICKEN!</a>
+                    </h1>
+                    <p class="lead texto-borde-negro">Sube tu mejor receta que contenga: <strong>Pollo Frito</strong>, <strong>Patatas</strong> y una <strong>Salsa</strong> deliciosa. ¡Simple y delicioso!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
     <br>
   
     <!-- Barra buscador -->
-    {% include 'searcher.html' %}
-
+    <div>
+        <section class="container my-4">
+          <h2 class="text mb-4">
+            <a href="/recetas" class="link_amp">{{ "Buscador de Recetas" | gettext }}</a>
+        </h2>
+            <label for="buscador" class="form-label"><strong> {{ "Encuentra las mejores recetas de todo internet" | gettext }} </strong></label>
+            <div class="d-flex">
+                <input id="buscador" class="form-control me-2" type="search" placeholder="{{ "Receta o Ingrediente" | gettext }}" aria-label="Search">
+                <button class="btn btn-pastel" type="submit">{{"Buscar" | gettext }}</button>
+            </div>
+        </section>
+    </div>
     <br>
   
     <!-- Phrases -->
@@ -54,7 +82,7 @@
         <!-- Secció noticies -->
         <section class="container my-4">
             <h2 class="text mb-4">
-                <a href="/recetas" class="link_amp">{{ "Recetas más populares" | trans }}</a>
+                <a href="/recetas" class="link_amp">{{ "Recetas más populares" | gettext }}</a>
             </h2>
           <div class="row g-4">
         
@@ -63,9 +91,9 @@
             <div class="card h-100">
               <img src="img/occ.png" class="card-img-top" alt="Noticia 1">
               <div class="card-body">
-                <h5 class="card-title">{{ "Cheesecake de Oreo" | trans }}</h5>
-                <p class="card-text">{{ "Tarta de queso con Oreo, sirope de fresa y crema de chocolate blanco" | trans }}</p>
-                <a href="/recetas/" class="btn btn-pastel">{{ "Leer Receta" | trans }}</a>
+                <h5 class="card-title">{{ "Cheesecake de Oreo" | gettext }}</h5>
+                <p class="card-text">{{ "Tarta de queso con Oreo, sirope de fresa y crema de chocolate blanco" | gettext }}</p>
+                <a href="/recetas/" class="btn btn-pastel">{{ "Leer Receta" | gettext }}</a>
               </div>
             </div>
           </div>
@@ -75,9 +103,9 @@
             <div class="card h-100">
               <img src="img/rbtest.png" class="card-img-top" alt="Noticia 2">
               <div class="card-body">
-                <h5 class="card-title">{{ "Roscón de Red Velvet" | trans }}</h5>
-                <p class="card-text">{{ "Roscón de Red Velvet con Mascarpone y merengue roja" | trans }}</p>
-                <a href="/recetas/" class="btn btn-pastel">{{ "¡A la Receta!" | trans }}</a>
+                <h5 class="card-title">{{ "Roscón de Red Velvet" | gettext }}</h5>
+                <p class="card-text">{{ "Roscón de Red Velvet con Mascarpone y merengue roja" | gettext }}</p>
+                <a href="/recetas/" class="btn btn-pastel">{{ "¡A la Receta!" | gettext }}</a>
               </div>
             </div>
           </div>
@@ -87,9 +115,9 @@
             <div class="card h-100">
               <img src="img/bgo.png" class="card-img-top" alt="Noticia 3">
               <div class="card-body">
-                <h5 class="card-title">{{ "Brazo de gitano de Red Velvet" | trans }}</h5>
-                <p class="card-text">{{ "Brazo de gitano. ¡Bizcocho de Red Velvet con Mascarpone y Oreo!" | trans }}</p>
-                <a href="/recetas/" class="btn btn-pastel">{{ "Mostrar Receta" | trans }}</a>
+                <h5 class="card-title">{{ "Brazo de gitano de Red Velvet" | gettext }}</h5>
+                <p class="card-text">{{ "Brazo de gitano. ¡Bizcocho de Red Velvet con Mascarpone y Oreo!" | gettext }}</p>
+                <a href="/recetas/" class="btn btn-pastel">{{ "Mostrar Receta" | gettext }}</a>
               </div>
             </div>
           </div>
@@ -106,7 +134,7 @@
 
     <section class="container my-4">
         <h2 class="text mb-4">
-            <a href="/blog" class="link_amp">{{ "Últimos Artículos de Cocina" | trans }}</a>
+            <a href="/blog" class="link_amp">{{ "Últimos Artículos de Cocina" | gettext }}</a>
         </h2>
         <div class="row">
             <div class="col-md-4">

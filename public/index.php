@@ -1,8 +1,8 @@
 <?php
-/*
+
 // Cargamos el archivo gettext
 require_once __DIR__ . '/../config/locale.php';
-*/
+
 
 // Instància del Routing
 $request = strtok($_SERVER['REQUEST_URI'], '?');

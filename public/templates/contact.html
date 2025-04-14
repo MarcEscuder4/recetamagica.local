@@ -24,7 +24,7 @@ session_start();
         <link rel="stylesheet" href="../assets/css/contact.css">
         <!-- Data -->
         <link rel="icon" href="/img/LRM.ico">
-        <title>La Receta Mágica | Contacto</title>
+        <title>La Receta Mágica | {{ "Contacto" | trans }}</title>
     </head>
 
     <body>
@@ -53,9 +53,9 @@ session_start();
                     {{ error }}
                 </div>
                 {% endif %}
-                <h1 class="text-black fw-bold">{{ "Contacto" | gettext }}</h1>
+                <h1 class="text-black fw-bold">{{ "Contacto" | trans }}</h1>
                 <a href="/formulari" class="register">
-                    <h2 class="text-muted fs-5">{{ "Te responderemos en el menor tiempo posible" | gettext }}</h2>
+                    <h2 class="text-muted fs-5">{{ "Te responderemos en el menor tiempo posible" | trans }}</h2>
                 </a>
             </div>
             <div>
@@ -63,52 +63,52 @@ session_start();
                 <!-- AFEGIR A ACTION A ON S'ENVIARÀN LES DADES DEL FORM PER PROCESSAR-LES (ex. procesar_contacto.php)-->
                 <form action="" method="post" id="contactForm">
                     <div class="mb-3">
-                        <label for="motivo" class="form-label">Motivo del Contacto</label>
+                        <label for="motivo" class="form-label">{{ "Motivo del Contacto" | trans }}</label>
                         <select class="form-select" id="motivo" name="motivo" required>
-                            <option value="" disabled selected>Selecciona un motivo</option>
-                            <option value="duda">Tengo una duda</option>
-                            <option value="sugerencia">Quiero hacer una sugerencia</option>
-                            <option value="problema">Encontré un problema</option>
-                            <option value="colaboracion">Me gustaría colaborar</option>
-                            <option value="otro">Otro motivo</option>
+                            <option value="" disabled selected>{{ "Selecciona un motivo" | trans }}</option>
+                            <option value="duda">{{ "Tengo una duda" | trans }}</option>
+                            <option value="sugerencia">{{ "Quiero hacer una sugerencia" | trans }}</option>
+                            <option value="problema">{{ "Encontré un problema" | trans }}</option>
+                            <option value="colaboracion">{{ "Me gustaría colaborar" | trans }}</option>
+                            <option value="otro">{{ "Otro motivo" | trans }}</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="username" class="form-label">Nombre</label>
+                        <label for="username" class="form-label">{{ "Nombre" | trans }}</label>
                         <input type="text" id="username" name="username" class="form-control" placeholder="Nombre o Empresa" required>
                     </div>
                     <div class="mb-3">
-                        <label for="telefono" class="form-label">Número de Teléfono</label>
+                        <label for="telefono" class="form-label">{{ "Número de Teléfono" | trans }}</label>
                         <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ej: 612345678" pattern="[67][0-9]{8}" required>
                         <div class="form-text invalid-feedback" id="telefonoError">
-                            Introduce un número válido de 9 cifras sin espacios ni guiones.
+                            {{ "Introduce un número válido de 9 cifras sin espacios ni guiones." | trans }}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <label for="email" class="form-label">{{ "Correo Electrónico" | trans }}</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@correo.com" required>
                     </div>
                     <div class="mb-3">
-                        <label for="preferencia" class="form-label">Preferencia de Respuesta</label>
+                        <label for="preferencia" class="form-label">{{ "Preferencia de Respuesta" | trans }}</label>
                         <select class="form-select" id="preferencia" name="preferencia" required>
-                            <option value="" disabled selected>Selecciona una opción</option>
-                            <option value="telefono">Teléfono</option>
-                            <option value="email">Correo electrónico</option>
+                            <option value="" disabled selected>{{ "Selecciona una opción" | trans }}</option>
+                            <option value="telefono">{{ "Teléfono" | trans }}</option>
+                            <option value="email">{{ "Correo electrónico" | trans }}</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+                        <label for="exampleFormControlTextarea1" class="form-label">{{ "Mensaje" | trans }}</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Introduce tu mensaje aquí" rows="5" required></textarea>
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="acepto" name="acepto" required>
                         <label class="form-check-label" for="acepto">
-                            Acepto la <a href="/politica-privacidad" target="_blank">política de privacidad</a>.
+                            {{ "Acepto la" | trans }} <a href="/politica-privacidad" target="_blank">{{ "política de privacidad" | trans }}</a>.
                         </label>
                     </div>
                     <div class="col-12 mb-3 d-flex justify-content-end gap-3">
-                        <button type="reset" class="btn btn-outline-dark">{{ "Limpiar" | gettext }}</button>
-                        <button type="submit" class="btn btn-pastel">{{ "Enviar" | gettext }}</button>
+                        <button type="reset" class="btn btn-outline-dark">{{ "Limpiar" | trans }}</button>
+                        <button type="submit" class="btn btn-pastel">{{ "Enviar" | trans }}</button>
                     </div>
                 </form>
             </div>

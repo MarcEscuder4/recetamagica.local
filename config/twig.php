@@ -13,11 +13,11 @@ $twig = new \Twig\Environment($loader, [
 // Añadir extensión de depuración (solo en desarrollo)
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
-// Filtro para usar gettext {{ "Texto a traducir"|gettext }}
+// Filtro para usar gettext {{ "Texto a traducir" | trans }}
 class GettextExtension extends \Twig\Extension\AbstractExtension {
     public function getFilters() {
         return [
-            new \Twig\TwigFilter('gettext', 'gettext'),
+            new \Twig\TwigFilter('trans', 'gettext'),
         ];
     }
 }

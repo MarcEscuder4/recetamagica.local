@@ -34,9 +34,9 @@
                 {{ error }}
             </div>
             {% endif %}
-          <h1 class="text-black fw-bold">{{ "Iniciar Sesión" | gettext }}</h1>
-          <a href="/formulari" class="register">
-            <h2 class="text-muted fs-5 link_amp">{{ "Registrarse" | gettext }}</h2>
+          <h1 class="text-black fw-bold">{{ "Iniciar Sesión" | trans }}</h1>
+          <a href="/form" class="register">
+            <h2 class="text-muted fs-5 link_amp">{{ "Registrarse" | trans }}</h2>
           </a>
         </div>
     
@@ -56,7 +56,7 @@
                 <label class="form-check-label" for="remember_me">Recuérdame</label>
               </div>
               <div class="col-12 mb-3 d-flex justify-content-end gap-3">
-                <a href="/form" class="btn btn-outline-dark">{{ "Ir a Registrarse" | gettext }}</a>
+                <a href="/form" class="btn btn-outline-dark">{{ "Ir a Registrarse" | trans }}</a>
                 <button type="submit" class="btn btn-pastel">Entrar</button>
               </div>
             </form>

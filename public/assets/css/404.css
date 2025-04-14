@@ -1,29 +1,97 @@
+/* Typo Style */
 body {
-    background: url('/img/treesad.webp') no-repeat center center fixed;
+    background: url('/img/bg404.jpg') no-repeat center center fixed;
     background-size: cover;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white; /* Texto en blanco para mayor contraste */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15); /* Sombra para mejor visibilidad */
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
 }
 
-/* Agregar un overlay semitransparente */
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.15); /* Ajusta el último valor (0.5) para cambiar la opacidad */
-    z-index: -1;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sigmar';
 }
+
+p {
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
+}
+  
+.walter-turncoat-regular {
+    font-family: "Walter Turncoat";
+    font-weight: 400;
+    font-style: normal;
+}
+
+.sigmar-regular {
+    font-family: "Sigmar", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.text_content {
+    font-size: 1.5rem;
+}
+
+/* Centrado vertical y horizontal 
+body, html {
+    height: 100%;
+    margin: 0;
+}
+    */
 
 .container {
-    background: rgba(0, 0, 0, 0.4); /* Fondo semitransparente para mejor legibilidad */
-    padding: 20px;
-    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+}
+
+/* Sombreado blanco en textos */
+h1, p {
+    color: black;
+    text-shadow:
+        -1px -1px 0 white,
+         1px -1px 0 white,
+        -1px  1px 0 white,
+         1px  1px 0 white,
+        -2px  0   0 white,
+         2px  0   0 white,
+         0   -2px 0 white,
+         0    2px 0 white;
+}
+
+
+/* Estilo del botón "Pastel" */
+.btn-pastel {
+    background-color: #FFD1EA;
+    color: #000;
+    border: 3px solid white;;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-pastel:hover {
+    background-color: #FF6F91;
+    color: #fff;
+}
+
+/* Efecto de vibración */
+@keyframes vibrar {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(5px); }
+}
+
+/* Aplicar la vibración al pasar el ratón */
+.vibrar:hover {
+    animation: vibrar 0.3s ease-in-out infinite;
+}
+
+/* Espaciado entre elementos */
+.espaciado {
+    margin-bottom: 30px; /* Ajusta el valor según sea necesario */
 }

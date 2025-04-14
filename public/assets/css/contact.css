@@ -35,7 +35,7 @@ p {
   
 /* Buttons Style */
 .btn-pastel {
-    background-color: #F8C8DC;
+    background-color: #FFD1EA;
     color: #000;
     border: none;
     border-radius: 8px;
@@ -112,7 +112,7 @@ i:hover {
 
   /* Desplegable Style */
 .dropdown-menu .dropdown-item:hover {
-    background-color: #F8C8DC;
+    background-color: #FFD1EA;
     color: #000;
 }
 

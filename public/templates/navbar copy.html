@@ -1,0 +1,46 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #ffd1ea;">
+    <div class="container-fluid">
+        <a class="navbar-brand zoom" href="/"><strong>La Receta Mágica</strong></a>
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+            <span class="toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-lg-auto my-2 my-lg-0">
+                <li class="nav-item dropdown zoom">
+                    <a class="nav-link dropdown-toggle active" href="/recetas" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong>{{ "Recetas" | gettext }}</strong>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item bg-color-all zoom" href="/recetas"><strong>{{ "¡Ir a Recetas!" | gettext }}</strong></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item zoom" href="crear_receta"><strong>{{ "Crear Receta" | gettext }}</strong></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item zoom" href=""><strong>{{ "Entrantes" | gettext }}</strong></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item zoom" href=""><strong>{{ "Primeros" | gettext }}</strong></a></li>
+                        <li><a class="dropdown-item zoom" href=""><strong>{{ "Segundos" | gettext }}</strong></a></li>
+                        <li><a class="dropdown-item zoom" href=""><strong>{{ "Postres" | gettext }}</strong></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item zoom" href=""><strong>{{ "Bebidas" | gettext }}</strong></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active zoom" aria-current="page" href="/desafios"><strong>{{ "Desafios" | gettext }}</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active zoom" aria-current="page" href="/blog"><strong>{{ "Blog" | gettext }}</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active zoom" aria-current="page" href="/login"><strong>{{ "Iniciar Sesión" | gettext }}</strong></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,36 +1,28 @@
-Información que debe contener un README
+## **La Receta Mágica**
 
-Un buen README debe incluir:
+La Receta Mágica és una aplicación web de cocina.
 
-    Título del Proyecto
-        Nombre del proyecto de manera clara.
+Instalación
+    Pasos para instalar las dependencias necesarias.
+    Ejemplo de comandos (npm install, pip install -r requirements.txt, etc.).
 
-    Descripción
-        Breve explicación de qué hace el proyecto y cuál es su propósito.
+Uso
+    Cómo ejecutar el proyecto con ejemplos (npm start, python app.py, etc.).
+    Parámetros o configuraciones necesarias.
 
-    Instalación
-        Pasos para instalar las dependencias necesarias.
-        Ejemplo de comandos (npm install, pip install -r requirements.txt, etc.).
+Estructura del Proyecto (Opcional)
+    Explicación de la organización de archivos y carpetas principales.
 
-    Uso
-        Cómo ejecutar el proyecto con ejemplos (npm start, python app.py, etc.).
-        Parámetros o configuraciones necesarias.
+Requisitos
+    Versión de lenguaje o frameworks necesarios.
 
-    Estructura del Proyecto (Opcional)
-        Explicación de la organización de archivos y carpetas principales.
+Contribución
+    Guía para contribuir al proyecto (estándares de código, creación de pull requests, etc.).
 
-    Requisitos
-        Versión de lenguaje o frameworks necesarios.
+Licencia
+    Tipo de licencia bajo la cual se distribuye el proyecto (MIT, GPL, Apache, etc.).
 
-    Contribución
-        Guía para contribuir al proyecto (estándares de código, creación de pull requests, etc.).
+Contacto o Créditos (Opcional)
+    Información del autor o equipo, links de contacto.
 
-    Licencia
-        Tipo de licencia bajo la cual se distribuye el proyecto (MIT, GPL, Apache, etc.).
-
-    Contacto o Créditos (Opcional)
-        Información del autor o equipo, links de contacto.
-
-    Estado del Proyecto (Opcional)
-
-    Si está en desarrollo, producción, o abandonado.
+Actualmente el proyecto se encuentra en **desarrollo**.

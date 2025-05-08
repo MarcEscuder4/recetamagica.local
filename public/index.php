@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // Cargamos el archivo gettext
 require_once __DIR__ . '/../config/locale.php';
@@ -14,17 +15,18 @@ function redirect($url) {
     exit();
 }
 
+
 // Definició del Routing
-if (preg_match('/^\/pajaros\/(\d+)$/', $request, $matches)) {
+if (preg_match('/^\/recetas\/(\d+)$/', $request, $matches)) {
 
-    $idPajaro = $matches[1]; // Obtienes el ID del pájaro
-    require __DIR__ . $viewDir . 'detallePajaro.php';
+    $idPajaro = $matches[1]; // Obtienes el ID de la receta
+    require __DIR__ . $viewDir . 'receta.php';
 
-}  elseif (preg_match('/^\/admin\/pajaros\/(\d+)$/', $request, $matches)) {
+}  elseif (preg_match('/^\/admin\/receta\/(\d+)$/', $request, $matches)) {
 
     $idPajaro = $matches[1];
     if (SessionController::isLoggedIn()) {
-        require __DIR__ . $viewDir . 'adminPajaroId.php';
+        require __DIR__ . $viewDir . 'adminRM.php';
 
     } else {
         redirect("/");
@@ -42,20 +44,15 @@ if (preg_match('/^\/pajaros\/(\d+)$/', $request, $matches)) {
             require __DIR__ . $viewDir . 'form.php';
             break;
         case '/login':
-            // if (SessionController::isLoggedIn()) {
-                // redirect("/admin");
-                //break;
-            // } else {
-                require __DIR__ . $viewDir . 'login.php';
-                break;
-            // } 
-        //case '/admin':
-            // if (SessionController::isLoggedIn()) {
-                // require __DIR__ . $viewDir . 'adminDashboard.php';
-            // } else {
-                // redirect("/");
-            // }
-            // break;
+            require __DIR__ . $viewDir . 'login.php';
+            break;
+        case '/perfil':
+            if (SessionController::isLoggedIn()) {
+                require __DIR__ . $viewDir . 'perfil.php';
+            } else {
+                redirect("/login");
+            }
+            break;
         case '/blog':
             require __DIR__ . $viewDir . 'blog.php';
             break;
@@ -64,7 +61,13 @@ if (preg_match('/^\/pajaros\/(\d+)$/', $request, $matches)) {
             break; 
         case '/desafios':
             require __DIR__ . $viewDir . 'desafios.php';
-            break;   
+            break;
+        case '/crear-receta/formulario1':
+            require __DIR__ . $viewDir . 'steps.php';
+            break;
+        case '/crear-receta/formulario2':
+            require __DIR__ . $viewDir . 'steps2.php';
+            break;
         case '/test':
             require __DIR__ . $viewDir . 'test.php';
             break;

@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Si la validación es exitosa, continuar con el procesamiento del formulario
         // Ejemplo: Enviar un correo electrónico
 
-        $to = "tucorreo@dominio.com"; // Dirección de correo a la que se enviará el formulario
+        $to = "mescudero@elpuig.xeill.net"; // Dirección de correo a la que se enviará el formulario
         $subject = "Nuevo mensaje de contacto de " . $nombre;
         $message = "
         <html>

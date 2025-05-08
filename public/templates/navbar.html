@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #FFD1EA;">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-          <img src="/img/hatpng.ico" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+          <img src="/img/favicon/recetamagica.ico" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
           <strong>La Receta Mágica</strong>
         </a>
         <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
@@ -19,7 +19,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item bg-color-all zoom" href="/recetas"><strong>{{ "¡Ir a Recetas!" | trans }}</strong></a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item zoom" href="crear_receta"><strong>{{ "Crear Receta" | trans }}</strong></a></li>
+                        <li><a class="dropdown-item zoom" href="/crear-receta/formulario1"><strong>{{ "Crear Receta" | trans }}</strong></a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item zoom" href=""><strong>{{ "Entrantes" | trans }}</strong></a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -39,9 +39,23 @@
                     <a class="nav-link active zoom" aria-current="page" href="/blog"><strong>{{ "Blog" | trans }}</strong></a>
                 </li>
 
+                {% if session.username is defined %}
+                <li class="nav-item dropdown zoom">
+                    <a class="nav-link dropdown-toggle active" href="" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong>{{ "Perfil" | trans }}</strong>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item zoom" href="/perfil"><strong>{{ "Perfil" | trans }}</strong></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item zoom" href="/logout"><strong>{{ "Cerrar Sesión" | trans }}</strong></a></li>
+                    </ul>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link active zoom" aria-current="page" href="/login"><strong>{{ "Iniciar Sesión" | trans }}</strong></a>
                 </li>
+                {% endif %}
+
             </ul>
         </div>
     </div>

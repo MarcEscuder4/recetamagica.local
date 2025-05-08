@@ -23,7 +23,7 @@ session_start();
         <!-- CSS -->
         <link rel="stylesheet" href="../assets/css/contact.css">
         <!-- Data -->
-        <link rel="icon" href="/img/LRM.ico">
+        <link rel="icon" href="/img/favicon/recetamagica.ico">
         <title>La Receta Mágica | {{ "Contacto" | trans }}</title>
     </head>
 
@@ -54,9 +54,7 @@ session_start();
                 </div>
                 {% endif %}
                 <h1 class="text-black fw-bold">{{ "Contacto" | trans }}</h1>
-                <a href="/formulari" class="register">
-                    <h2 class="text-muted fs-5">{{ "Te responderemos en el menor tiempo posible" | trans }}</h2>
-                </a>
+                <h2 class="text-muted fs-5">{{ "Te responderemos en el menor tiempo posible" | trans }}</h2>
             </div>
             <div>
                 <!-- Uso de reCAPTCHA con claves de prueba -->
@@ -75,18 +73,18 @@ session_start();
                     </div>
                     <div class="mb-3">
                         <label for="username" class="form-label">{{ "Nombre" | trans }}</label>
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Nombre o Empresa" required>
+                        <input type="text" id="username" name="username" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="form-label">{{ "Número de Teléfono" | trans }}</label>
-                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ej: 612345678" pattern="[67][0-9]{8}" required>
+                        <input type="tel" class="form-control" id="telefono" name="telefono" pattern="[67][0-9]{8}" required>
                         <div class="form-text invalid-feedback" id="telefonoError">
                             {{ "Introduce un número válido de 9 cifras sin espacios ni guiones." | trans }}
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">{{ "Correo Electrónico" | trans }}</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                        <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="preferencia" class="form-label">{{ "Preferencia de Respuesta" | trans }}</label>

@@ -7,7 +7,6 @@ class SessionController {
 
     private $connection;
     
-
     public function __construct() {
         //$this->connection = DataBaseController::connect();
         $dbController = DatabaseController::getInstance();
@@ -45,54 +44,63 @@ class SessionController {
     }
 
     public static function userLogin($username, $password){
-
-        if (!(new self)->exist($username)) {
-            //echo "Username does not exists";
-            return false;
+        // Verificamos si es email o username
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $sql = "SELECT id, password, role FROM User WHERE email = :email";
         } else {
-            try {
-       
-                $sql = "SELECT id, password FROM User WHERE username = :username";
+            $sql = "SELECT id, password, role FROM User WHERE username = :username";
+        }
+    
+        $_SESSION['role'] = $user->role;
 
-                $statement = (new self)->connection->prepare($sql);
+        try {
+            $statement = (new self)->connection->prepare($sql);
+    
+            // Vinculamos los parámetros según si es email o username
+            if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                $statement->bindValue(':email', $username);
+            } else {
                 $statement->bindValue(':username', $username);
-                $statement->setFetchMode(PDO::FETCH_OBJ);
-                $statement->execute();
+            }
     
-                $user = $statement->fetch();
+            $statement->setFetchMode(PDO::FETCH_OBJ);
+            $statement->execute();
     
-                if ($user && password_verify($password, $user->password)) {
-                    // La autenticación es correcta
-                    session_start();
-                    
-                    $_SESSION['user_id'] = $user->id;
-                    $_SESSION['username'] = $username;
-                    // Redirigir al usuario a su perfil o a la página de inicio
-                    // header("Location: perfil.php");
-
-                    // Creamos un token de session
-                    self::generateSessionToken($user);
-                    
-                    // Creamos y guardamos el token jwt en una cookie segura
-                    SessionController::createSecureCookie("jwt", self::createJWT(), time() + (86400 * 30), "/"); // 30 días
-                    return true;
-
-                } else {
-                    // Usuario o contraseña incorrectos
-                    //echo "Nombre de usuario o contraseña incorrectos.";
-                    return false;
+            $user = $statement->fetch();
+    
+            if ($user && password_verify($password, $user->password)) {
+                // Iniciamos la sesión si la autenticación es correcta
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start(); // Iniciar sesión si no está iniciada
                 }
+                
+                $_SESSION['user_id'] = $user->id;
+                $_SESSION['username'] = $username;
     
-              } catch(PDOException $error) {
-                  echo $sql . "<br>" . $error->getMessage();
-                  return false;
-              }
+                // Generamos el token de sesión
+                self::generateSessionToken($user);
+    
+                // Creamos y guardamos el token JWT en una cookie segura
+                SessionController::createSecureCookie("jwt", self::createJWT(), time() + (86400 * 30), "/"); // 30 días
+    
+                return true;
+            } else {
+                // Usuario o contraseña incorrectos
+                $_SESSION['error'] = "Nombre de usuario o contraseña incorrectos.";  // Guardamos el error para mostrarlo en el frontend
+                return false;
+            }
+        } catch(PDOException $error) {
+            // Manejo de errores
+            echo "Error: " . $error->getMessage(); // Mejor manejar errores sin mostrar en producción
+            return false;
         }
     }
+    
 
     public static function userLogout() {
         session_start();
         session_destroy();
+
         setcookie("token", "", time() - 3600, "/"); // Eliminar cookie
         setcookie("jwt", "", time() - 3600, "/"); // Eliminar cookie
     }
@@ -161,7 +169,7 @@ class SessionController {
         }
     }
 
-    //TODO cookie jwt
+    // cookie jwt
     public static function verifyTokenCookie() {
 
         if (isset($_COOKIE['token'])) {
@@ -180,7 +188,7 @@ class SessionController {
             } else {
                 // Token inválido
                 setcookie("token", "", time() - 3600, "/"); // Eliminar cookie
-                // header("Location: login.php");
+                // header("Location: /login.php");
                 // exit();
                 echo "Token inválido!";
                 return false;

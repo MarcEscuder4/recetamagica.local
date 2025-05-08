@@ -16,8 +16,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/css/test.css">
     <!-- Data -->
-    <link rel="icon" href="/img/hatpng.ico">
-    <title>La Receta Mágica | Formulari</title>
+    <link rel="icon" href="/img/favicon/recetamagica.ico">
+    <title>La Receta Mágica | {{ "Perfil" | trans }}</title>
 </head>
 
 <body>
@@ -29,11 +29,11 @@
         <div class="container mt-5 mb-5">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="text-black fw-bold">Formulario de registro</h1>
-                    <h2 class="text-muted fs-5">¡Bienvenidos a La Receta Mágica!</h2>
+                    <h1 class="text-black fw-bold">Perfil</h1>
+                    <h2 class="text-muted fs-5">{{ users.username }}</h2>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end">
-                    <img src="../img/profile/test.png" alt="Foto de perfil" class="rounded-circle" width="120" height="120">
+                    <img src="{{ users.avatar }}" alt="Foto de perfil" class="rounded-circle" width="120" height="120">
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
         <div class="form-floating mb-3">
             <div class="mb-3">
                 <label for="username" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control required" id="username" placeholder="Username">
+                <input type="text" class="form-control required" id="username" placeholder="{{ users.username }}">
             </div>
         </div>
         <div class="form-floating mb-3">

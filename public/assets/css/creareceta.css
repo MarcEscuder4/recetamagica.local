@@ -1,0 +1,201 @@
+/* Typo Style */
+body {
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sigmar';
+}
+
+p {
+    font-family: "Walter Turncoat";
+    font-size: 1rem;
+}
+  
+.walter-turncoat-regular {
+    font-family: "Walter Turncoat";
+    font-weight: 400;
+    font-style: normal;
+}
+
+.sigmar-regular {
+    font-family: "Sigmar", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.text_content {
+    font-size: 1.5rem;
+}
+
+/* Buttons Style */
+.btn-pastel {
+    background-color: #FFD1EA;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-pastel:hover {
+    background-color: #FF6F91;
+    color: #fff;
+}
+
+.btn-pastel-outline {
+    background-color: transparent;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-pastel-outline:hover {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: none; /* Resalta cuando pasa el mouse */
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);
+    outline: none;
+}
+
+/* Links Style */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #FF6F91;
+}
+
+i {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
+}
+
+i:hover {
+    color: #FF6F91;
+}
+
+.link_amp {
+    text-decoration: none;
+    transition: transform 0.3s, color 0.3s;
+    display: inline-block; /* por si no escala bien */
+    -webkit-font-smoothing: antialiased;
+}
+.link_amp:hover {
+    color: #FF6F91;
+    transform: scale(1.05);
+}
+
+.footy {
+    color: white !important;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .footy:hover {
+    color: #FF6F91 !important;
+    transform: scale(1.15);
+  }
+
+  /* Desplegable Style */
+.dropdown-menu .dropdown-item:hover {
+    background-color: #FFD1EA;
+    color: #000;
+}
+
+  /* Navbar Burger-X Style */
+.custom-toggler .toggler-icon {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-toggler .toggler-icon::before,
+.custom-toggler .toggler-icon::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-toggler .toggler-icon::before {
+    top: -10px;
+}
+
+.custom-toggler .toggler-icon::after {
+    top: 10px;
+}
+
+/* When menu is open (show) */
+.custom-toggler.open .toggler-icon {
+    background-color: transparent;
+}
+
+.custom-toggler.open .toggler-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.custom-toggler.open .toggler-icon::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+.custom-toggler {
+  border: none;
+  box-shadow: none;
+  outline: none !important;
+}
+
+.custom-toggler:focus {
+  box-shadow: none;
+  outline: none !important;
+}
+
+input.form-control.input-pastel {
+    background-color: #ffffff !important;
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+input.form-control.input-pastel::placeholder {
+    color: #888 !important;
+}
+
+input.form-control.input-pastel:focus {
+    border-color: #888; /* Cambiar el color del borde cuando el input está enfocado */
+    box-shadow: 0 0 0 0.25rem rgb(255, 209, 234, 0.75); /* Un sutil resplandor alrededor */
+}
+
+.texto-borde-negro h1, .texto-borde-negro p {
+    text-shadow: 2px 2px 2px #000, -2px -2px 2px #000; /* Borde negro */
+}
+
+.bg-color-all {
+    background-color: #FF6F91;
+}
+
+/* Check de recordarme */
+.custom-checkbox .form-check-input:checked {
+    background-color: #FF6F91;
+    border-color: #FF6F91;
+}
+  
+select option:checked {
+    background-color: #FFD1EA;
+  }
+  

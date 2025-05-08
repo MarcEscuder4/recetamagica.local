@@ -26,10 +26,17 @@ class GettextExtension extends \Twig\Extension\AbstractExtension {
 $twig->addExtension(new GettextExtension());
 
 // Iniciamos la sesión
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Pasar las variables de sesión al entorno de Twig
-//$twig->addGlobal('session', $_SESSION);
+// Pasar variables de sesión a Twig como globales
+if (isset($_SESSION['error'])) {
+    $twig->addGlobal('error', $_SESSION['error']);
+}
+if (isset($_SESSION['success'])) {
+    $twig->addGlobal('success', $_SESSION['success']);
+}
 
 // Limpiar las variables de sesión después de cargarlas
 function clearSessionMessages() {

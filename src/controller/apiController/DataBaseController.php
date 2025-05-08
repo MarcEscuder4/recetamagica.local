@@ -5,7 +5,7 @@ class DatabaseController {
     private static $host = "localhost"; // Dirección del host de la base de datos
     private static $username = "usuario"; // Nombre de usuario para la conexión
     private static $password = "password"; // Contraseña para la conexión
-    private static $dbname = "trees_db"; // Nombre de la base de datos
+    private static $dbname = "receta_magica"; // Nombre de la base de datos
     private static $options = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Modo de errores de PDO
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8" // Establecer la codificación de caracteres a UTF-8

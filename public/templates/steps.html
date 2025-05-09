@@ -161,9 +161,12 @@
                     <br>
 
                     <div class="col-12 mb-3 d-flex justify-content-end gap-3">
+                        <button type="button" class="btn btn-outline-dark" id="del-ingredient-btn">{{ "- Eliminar ingrediente" | trans }}</button>
                         <button type="button" class="btn btn-pastel" id="add-ingredient-btn">{{ "+ Añadir ingrediente" | trans }}</button>
                     </div>
                 </div>
+
+                <br>
               
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -286,6 +289,6 @@
             const count = document.querySelectorAll('.ingredient-row').length;
             document.getElementById('ingredient-count').textContent = `(${count})`;
         }
-    </script>            
+    </script>         
 </body>
 </html>

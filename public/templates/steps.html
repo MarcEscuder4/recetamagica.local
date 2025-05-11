@@ -34,7 +34,7 @@
         <br>
 
         <div>
-            <form action="/public/views/login.php" method="post">
+            <form action="/public/views/create_recipe.php" method="post" enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre de la Receta</label>
@@ -42,8 +42,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="photo" class="form-label" background-color>Foto</label>
-                    <input type="file" class="form-control" aria-label="file example" required>
+                    <label for="photo" class="form-label">Foto</label>
+                    <input type="file" class="form-control" id="photo" name="photo" accept="image/*" required>
+
                     <div class="invalid-feedback">Example invalid form file feedback</div>
                 </div>
                         
@@ -122,13 +123,13 @@
                     <div id="ingredients-container">
                         <div class="row g-2 align-items-end mb-2 ingredient-row">
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ingredients[0][name]" placeholder="Nombre del ingrediente" required>
+                                <input type="text" class="form-control" name="ingredients[${ingredientIndex}][name]" placeholder="Nombre del ingrediente" required>
                             </div>
                             <div class="col-md-3">
-                                <input type="number" step="0.01" min="0" class="form-control" name="ingredients[0][quantity]" placeholder="Cantidad" required>
+                                <input type="number" step="0.01" min="0" class="form-control" name="ingredients[${ingredientIndex}][quantity]" placeholder="Cantidad" required>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-select" name="ingredients[0][unit]" required>
+                                <select class="form-select" name="ingredients[${ingredientIndex}][unit]" required>
                                     <optgroup label="Unidades">
                                         <option value="Unidad">Unidad/es</option>
                                     </optgroup>
@@ -172,7 +173,7 @@
                     <div class="col-md-6 mb-3">
                         <label for="difficulty" class="form-label">Dificultad</label>
                         <select class="form-select" id="difficulty" name="difficulty" required>
-                            <option disabled>Selecciona...</option>
+                            <option disabled selected hidden>Selecciona...</option>
                             <option value="Fácil">Fácil</option>
                             <option value="Media">Media</option>
                             <option value="Difícil">Difícil</option>
@@ -235,13 +236,13 @@
     <!-- Actualiza el número en el label de Ingredientes según los ingredientes que se tengan -->
     <script>
         let ingredientIndex = 1;
-            
+    
         document.getElementById('add-ingredient-btn').addEventListener('click', function () {
             const container = document.getElementById('ingredients-container');
-            
+    
             const row = document.createElement('div');
             row.classList.add('row', 'g-2', 'align-items-end', 'mb-2', 'ingredient-row');
-            
+    
             row.innerHTML = `
                 <div class="col-md-6">
                     <input type="text" class="form-control" name="ingredients[${ingredientIndex}][name]" placeholder="Nombre del ingrediente" required>
@@ -250,7 +251,7 @@
                     <input type="number" step="0.01" min="0" class="form-control" name="ingredients[${ingredientIndex}][quantity]" placeholder="Cantidad" required>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select" name="ingredients[0][unit]" required>
+                    <select class="form-select" name="ingredients[${ingredientIndex}][unit]" required>
                         <optgroup label="Unidades">
                             <option value="Unidad">Unidad/es</option>
                         </optgroup>
@@ -278,17 +279,31 @@
                     </select>
                 </div>
             `;
-            
+    
             container.appendChild(row);
             ingredientIndex++;
-            
+    
             updateIngredientCount();
         });
-            
+    
+        document.getElementById('del-ingredient-btn').addEventListener('click', function () {
+            const container = document.getElementById('ingredients-container');
+            const rows = container.querySelectorAll('.ingredient-row');
+    
+            if (rows.length > 1) {
+                rows[rows.length - 1].remove();
+                ingredientIndex--;
+                updateIngredientCount();
+            } else {
+                alert("Debe haber, al menos, un ingrediente.");
+            }
+        });
+    
         function updateIngredientCount() {
             const count = document.querySelectorAll('.ingredient-row').length;
             document.getElementById('ingredient-count').textContent = `(${count})`;
         }
-    </script>         
+    </script>
+    
 </body>
 </html>

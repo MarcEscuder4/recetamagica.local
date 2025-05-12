@@ -16,13 +16,23 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/css/test.css">
     <!-- Data -->
-    <link rel="icon" href="/img/LRM.ico">
+    <link rel="icon" href="/img/favicon/recetamagica.ico">
     <title>La Receta Mágica | {{ "Desafíos" | trans }}</title>
 </head>
 
 <body>
     <!-- Navbar -->
     {% include '/navbar.html' %}
+
+    <!-- Caroussel -->
+    {% include 'caroussel.html' %}
+
+    <div class="container mt-5 mb-5">
+      <h1 class="text-black fw-bold">{{ "Desafíos" | trans }}</h1>
+      <a href="/form" class="register">
+          <h2 class="text-muted fs-5">{{ "Participa y demuestra tus habilidades culinarias" | trans }}</h2>
+      </a>
+  </div>
 
     <br><br>
 

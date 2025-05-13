@@ -16,7 +16,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/css/test.css">
     <!-- Data -->
-    <link rel="icon" href="/img/hatpng.ico">
+    <link rel="icon" href="/img/favicon/recetamagica.ico">
     <title>La Receta Mágica | Formulari</title>
 </head>
 
@@ -24,98 +24,131 @@
     <!-- Navbar -->
     {% include '/navbar.html' %}
 
-    <!-- Content -->
-    <form action="/ruta-de-registro" method="POST" enctype="multipart/form-data">
+    <!-- Content --> <!-- /registro -->
+    <form action="/registro" method="POST" enctype="multipart/form-data">
         <div class="container mt-5 mb-5">
+
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+    
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <!-- Texto: ocupa siempre 12 columnas en pantallas pequeñas, y 8 en medianas hacia arriba -->
+                <div class="col-12 col-md-8 order-2 order-md-1 mt-3 mt-md-0">
                     <h1 class="text-black fw-bold">Formulario de registro</h1>
                     <h2 class="text-muted fs-5">¡Bienvenidos a La Receta Mágica!</h2>
                 </div>
-                <div class="col-md-4 d-flex justify-content-end">
-                    <img src="../img/profile/test.png" alt="Foto de perfil" class="rounded-circle" width="120" height="120">
+
+                <!-- Imagen: ocupa 4 en medianas y grandes, y se oculta en móviles -->
+                <div class="col-md-4 d-none d-md-flex justify-content-md-end">
+                    <img src="../img/profile/test.png" alt="Foto de perfil" class="rounded-circle img-fluid" style="max-width: 120px; height: auto;">
                 </div>
             </div>
-
-        <br><hr class="dropdown-divider"><br>
-
-    <!-- Aquí empieza el formulario dentro del mismo container -->
-    <form action="/ruta-de-registro" method="POST" enctype="multipart/form-data">
-        <div class="form-floating mb-3">
+    
+            <br><hr class="dropdown-divider"><br>
+    
+            <!-- Username -->
             <div class="mb-3">
                 <label for="username" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control required" id="username" placeholder="Username">
+                <input type="text" class="form-control required" id="username" name="username" placeholder="Usuario" required>
             </div>
-        </div>
-        <div class="form-floating mb-3">
+    
+            <!-- Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control required" id="email" placeholder="username@email.com">
+                <input type="email" class="form-control required" id="email" name="email" placeholder="ejemplo@email.com" required>
             </div>
-        </div>
-        <div class="form-floating mb-3">
+    
+            <!-- Password -->
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control required" id="password">
+                <input type="password" class="form-control required" id="password" name="password" required>
             </div>
-        </div>
-        <div class="form-floating mb-3">
+    
+            <!-- Confirm Password (no se envía, solo para validación JS opcional) -->
             <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
                 <input type="password" class="form-control required" id="confirmPassword">
             </div>
-        </div>
-
-        <br>
-        <hr class="dropdown-divider">
-        <br>
-
-        <div class="mb-3">
-            <label for="fechaNacimiento" class="form-label required">Fecha de Nacimiento</label>
-            <input type="date" id="fechaNacimiento" class="form-control">
-        </div>
-        <div>
-            <label for="exampleInputPassword1" class="form-label">Género</label>
-            <select class="form-select" aria-label="Default select example">
-                <option value="1">Mujer</option>
-                <option value="2">Hombre</option>
-                <option value="3" selected>Prefiero no contestar</option>
-            </select>
-        </div>
-
-        <br>
-        <hr class="dropdown-divider">
-        <br>
-
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Foto de perfil</label>
-            <input class="form-control" type="file" id="formFile">
-        </div>
-
-        <br>
-        <hr class="dropdown-divider">
-        <br>
-
-        <div class="col-12 mb-3">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                <label class="form-check-label" for="invalidCheck">
-                    Confirmar los cambios
-                </label>
-                <div class="invalid-feedback">
-                    Para poder aplicar los cambios primero debe confirmar la casilla.
+    
+            <br>
+            <hr class="dropdown-divider">
+            <br>
+    
+            <!-- Nombre -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control required" id="name" name="name" placeholder="Nombre" required>
+            </div>
+    
+            <!-- Apellidos -->
+            <div class="mb-3">
+                <label for="surname1" class="form-label">Primer Apellido</label>
+                <input type="text" class="form-control" id="surname1" name="surname1" placeholder="Primer Apellido" required>
+            </div>
+            <div class="mb-3">
+                <label for="surname2" class="form-label">Segundo Apellido</label>
+                <input type="text" class="form-control" id="surname2" name="surname2" placeholder="Segundo Apellido" required>
+            </div>
+    
+            <!-- Fecha de nacimiento y género -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="birthdate" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="genre" class="form-label">Género</label>
+                    <select class="form-select" id="genre" name="genre" required>
+                        <option value="Mujer">Mujer</option>
+                        <option value="Hombre">Hombre</option>
+                        <option value="Prefiero no contestar" selected>Prefiero no contestar</option>
+                    </select>                                      
                 </div>
             </div>
+    
+            <!-- País -->
+            <div class="mb-3">
+                <label for="country" class="form-label">País</label>
+                <input type="text" class="form-control" id="country" name="country" placeholder="País" required>
+            </div>
+
+            <br>
+            <hr class="dropdown-divider">
+            <br>
+    
+            <!-- Avatar -->
+            <div class="mb-3">
+                <label for="avatar" class="form-label">Foto de perfil</label>
+                <input class="form-control" type="file" id="avatar" name="avatar">
+            </div>
+    
+            <br>
+            <hr class="dropdown-divider">
+            <br>
+    
+            <!-- Aceptar términos -->
+            <div class="col-12 mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                    <label class="form-check-label" for="termsCheck">
+                        Acepto los <strong><a href="/terminos-y-condiciones.html" target="_blank">Términos y Condiciones</a></strong> y la <strong><a href="/politica-de-privacidad.html" target="_blank">Política de Privacidad</a></strong>.
+                    </label>
+                </div>
+            </div>
+
+    
+            <!-- Botones -->
+            <div class="col-12 mb-3 d-flex justify-content-end">
+                <button class="btn btn-outline-dark me-3" type="reset">Limpiar</button>
+                <button class="btn btn-pastel" type="submit">Registrarse</button>
+            </div>
+    
         </div>
-
-        <div class="col-12 mb-3 d-flex justify-content-end">
-            <button class="btn btn-outline-dark me-3" type="reset">Limpiar</button>
-            <button class="btn btn-pastel" type="submit">Registrarse</button>
-        </div>
-
-
-    </div>
     </form>
+    
 <br><br>
 
 

@@ -41,5 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Renderizar la plantilla, pasando el error si existe
-echo $twig->render('login.html', ['error' => isset($_SESSION['error']) ? $_SESSION['error'] : '']);
+// Recuperar el mensaje de éxito, si existe
+$successMessage = $_SESSION['success_message'] ?? '';
+unset($_SESSION['success_message']); // Limpiar el mensaje de la sesión
+
+// Renderizar la plantilla, pasando el error y el mensaje de éxito
+echo $twig->render('login.html', [
+    'error' => isset($_SESSION['error']) ? $_SESSION['error'] : '',
+    'success_message' => $successMessage
+]);

@@ -40,9 +40,25 @@ if (preg_match('/^\/recetas\/(\d+)$/', $request, $matches)) {
         case '/':
             require __DIR__ . $viewDir . 'home.php';
             break;
-        case '/form':
-            require __DIR__ . $viewDir . 'form.php';
-            break;
+        case '/registro':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                require_once __DIR__ . '/../src/controller/apiController/SessionController.php';
+                $result = SessionController::userSignUp($_POST);
+        
+                if ($result === true) {
+                    // Registro exitoso → redirigir
+                    header("Location: /login");
+                    exit();
+                } else {
+                    // Mostrar error al usuario (puedes almacenarlo en sesión para mostrarlo en form.php)
+                    $_SESSION['signup_error'] = $result;
+                    header("Location: /registro");
+                    exit();
+                }
+            } else {
+                require __DIR__ . $viewDir . 'form.php';
+            }
+            break;                       
         case '/login':
             require __DIR__ . $viewDir . 'login.php';
             break;

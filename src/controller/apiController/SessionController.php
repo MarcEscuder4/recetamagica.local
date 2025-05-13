@@ -1,13 +1,8 @@
 <?php
 
-// Incluir el archivo de conexión
-//$pdo = require_once __DIR__ . '/../../config/conectorDatabase.php';
-// user: mescuder 	email: mescuder@elpuig.xeill.net 	password: password
-
 class SessionController {
 
     private $connection;
-
     private static $instance = null;
 
     private function __construct() {
@@ -22,330 +17,247 @@ class SessionController {
         return self::$instance;
     }
 
-    public static function userSignUp($username, $email, $password) {
-
-        if (($instance = self::getInstance())->exist($username, $email)) {
-            echo "Username or email already exist";
-            return;
-        } else {
-            try  {
-
-                $sql = "INSERT INTO User
-                        (username, email, password, token, jwt) VALUES (:username, :email, :password, :token, :jwt)";
-            
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $statement = ($instance = self::getInstance())->connection->prepare($sql);
-
-
-                $statement->bindValue(':username', $username);
-                $statement->bindValue(':email', $email);
-                $statement->bindValue(':password', $hashed_password);
-                $statement->bindValue(':token', "");
-                $statement->bindValue(':jwt', "");
-                $statement->setFetchMode(PDO::FETCH_OBJ);
-                $statement->execute();
-
-    
-                //echo "Usuario registrado exitosamente";
-                return true;
-    
-              } catch(PDOException $error) {
-                  // echo $sql . "<br>" . $error->getMessage();
-                  return false;
-              }
-        }
-    }
-
     private static function ensureSessionStarted() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
     }
 
-    public static function userLogin($username, $password){
+    public static function userSignUp($data) {
+        $instance = self::getInstance();
 
-        if (!($instance = self::getInstance())->exist($username)) {
-            //echo "Username does not exists";
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return "Invalid email format.";
+        }
+
+        if ($instance->exist($data['username']) || $instance->existByEmail($data['email'])) {
+            return "Username or email already exists.";
+        }
+
+        try {
+            $sql = "INSERT INTO users (
+                username, name, surname1, surname2, email, password,
+                country, birthdate, genre, points, role, avatar, token, jwt
+            ) VALUES (
+                :username, :name, :surname1, :surname2, :email, :password,
+                :country, :birthdate, :genre, 0, 'user', NULL, '', ''
+            )";                      
+
+            $stmt = $instance->connection->prepare($sql);
+            $stmt->bindValue(':username', $data['username']);
+            $stmt->bindValue(':name', $data['name']);
+            $stmt->bindValue(':surname1', $data['surname1']);
+            $stmt->bindValue(':surname2', $data['surname2']);
+            $stmt->bindValue(':email', $data['email']);
+            $stmt->bindValue(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+            $stmt->bindValue(':country', $data['country']);
+            $stmt->bindValue(':birthdate', $data['birthdate']);
+            $stmt->bindValue(':genre', $data['genre']);
+            $stmt->execute();
+
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Signup error: " . $e->getMessage());
             return false;
-        } else {
-            try {
-       
-                $sql = "SELECT id, email, role, password FROM User WHERE username = :username";
+        }
+    }
 
-                $statement = ($instance = self::getInstance())->connection->prepare($sql);
-                $statement->bindValue(':username', $username);
-                $statement->setFetchMode(PDO::FETCH_OBJ);
-                $statement->execute();
-    
-                $user = $statement->fetch();
-    
-                if ($user && password_verify($password, $user->password)) {
-                    // La autenticación es correcta
-                    session_start();
-                    
-                    $_SESSION['user_id'] = $user->id;
-                    $_SESSION['username'] = $username;
-                    $_SESSION['email'] = $user->email;
-                    // Redirigir al usuario a su perfil o a la página de inicio
-                    // header("Location: perfil.php");
+    public static function userLogin($username, $password) {
+        $instance = self::getInstance();
 
-                    // Creamos un token de session
-                    self::generateSessionToken($user);
-                    
-                    // Creamos y guardamos el token jwt en una cookie segura
-                    SessionController::createSecureCookie("jwt", self::createJWT(), time() + (86400 * 30), "/"); // 30 días
-                    return true;
+        if (!$instance->exist($username)) {
+            return false;
+        }
 
-                } else {
-                    // Usuario o contraseña incorrectos
-                    //echo "Nombre de usuario o contraseña incorrectos.";
-                    return false;
-                }
-    
-              } catch(PDOException $error) {
-                  echo $sql . "<br>" . $error->getMessage();
-                  return false;
-              }
+        try {
+            $sql = "SELECT id, username, email, role, password FROM users WHERE username = :username";
+            $stmt = $instance->connection->prepare($sql);
+            $stmt->bindValue(':username', $username);
+            $stmt->execute();
+
+            $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if ($user && password_verify($password, $user->password)) {
+                self::ensureSessionStarted();
+                $_SESSION['user_id'] = $user->id;
+                $_SESSION['username'] = $user->username;
+                $_SESSION['email'] = $user->email;
+                $_SESSION['user_role'] = $user->role;
+
+                self::generateSessionToken($user);
+                self::createSecureCookie("jwt", self::createJWT(), time() + (86400 * 30), "/");
+                return true;
+            }
+
+            return false;
+
+        } catch (PDOException $e) {
+            error_log("Login error: " . $e->getMessage());
+            return false;
         }
     }
 
     public static function userLogout() {
-        session_start();
+        self::ensureSessionStarted();
+        $userId = $_SESSION['user_id'] ?? null;
+
+        if ($userId) {
+            $stmt = self::getInstance()->connection->prepare("UPDATE users SET token = '', jwt = '' WHERE id = :id");
+            $stmt->bindValue(':id', $userId);
+            $stmt->execute();
+        }
+
         session_destroy();
-        setcookie("token", "", time() - 3600, "/"); // Eliminar cookie
-        setcookie("jwt", "", time() - 3600, "/"); // Eliminar cookie
+        setcookie("token", "", time() - 3600, "/");
+        setcookie("jwt", "", time() - 3600, "/");
     }
 
     private static function generateSessionToken($user) {
-           
-            if (isset($_SESSION['user_id'])) {
-                // Genera un token de sesión para recordar al usuario
-                $token = bin2hex(random_bytes(16));
-                setcookie("token", $token, time() + (86400 * 30), "/"); // 30 días
+        $token = bin2hex(random_bytes(16));
+        setcookie("token", $token, time() + (86400 * 30), "/");
 
-                // Guarda el token en la base de datos
-                $statement = ($instance = self::getInstance())->connection->prepare("UPDATE User SET token = :token WHERE id = :id");
-                $statement->bindValue(':token', $token);
-                $statement->bindValue(':id', $user->id);
-                
-                $statement->execute();
-                return true;
-            } else {
-                return false;
-            }
+        $stmt = self::getInstance()->connection->prepare("UPDATE users SET token = :token WHERE id = :id");
+        $stmt->bindValue(':token', $token);
+        $stmt->bindValue(':id', $user->id);
+        $stmt->execute();
     }
 
-    public static function exist($username, $email = null) {
+    public static function createJWT() {
+        self::ensureSessionStarted();
 
-        if ($email === null) {
+        if (!isset($_SESSION['user_id'])) return null;
 
-            try  {
-       
-                $sql = "SELECT * 
-                        FROM User
-                        WHERE username = :username";
-            
-                $statement = ($instance = self::getInstance())->connection->prepare($sql);
-                $statement->bindValue(':username', $username);
-                $statement->setFetchMode(PDO::FETCH_OBJ);
-                $statement->execute();
-    
-                $result = $statement->fetch();
-                return !$result ? false : true;
-    
-              } catch(PDOException $error) {
-                  echo $sql . "<br>" . $error->getMessage();
-            }
+        $header = ['alg' => 'HS256', 'typ' => 'JWT'];
+        $payload = [
+            'user_id' => $_SESSION['user_id'],
+            'username' => $_SESSION['username'],
+            'exp' => time() + (86400 * 30)
+        ];
 
-        } else {
+        $jwt = self::generateJWT($header, $payload, self::getSecretKey());
 
-            try  {
-       
-                $sql = "SELECT * 
-                        FROM User
-                        WHERE username = :username AND email = :email";
-            
-                $statement = ($instance = self::getInstance())->connection->prepare($sql);
-                $statement->bindValue(':username', $username);
-                $statement->bindValue(':email', $email);
-                $statement->setFetchMode(PDO::FETCH_OBJ);
-                $statement->execute();
-    
-                $result = $statement->fetch();
-                return !$result ? false : true;
-    
-              } catch(PDOException $error) {
-                  echo $sql . "<br>" . $error->getMessage();
-              }
-        }
+        $stmt = self::getInstance()->connection->prepare("UPDATE users SET jwt = :jwt WHERE id = :id");
+        $stmt->bindValue(':jwt', $jwt);
+        $stmt->bindValue(':id', $_SESSION['user_id']);
+        $stmt->execute();
+
+        return $jwt;
     }
 
-    //TODO cookie jwt
     public static function verifyTokenCookie() {
+        if (!isset($_COOKIE['token'])) return false;
 
-        if (isset($_COOKIE['token'])) {
-            $token = $_COOKIE['token'];
-            
-            $statement = ($instance = self::getInstance())->connection->prepare("SELECT id, username FROM User WHERE token = :token");
-            $statement->bindValue(":token", $token);
-            $statement->setFetchMode(PDO::FETCH_OBJ);
-            $statement->execute();
-            $user = $statement->fetch();
+        $token = $_COOKIE['token'];
+        $stmt = self::getInstance()->connection->prepare("SELECT id, username FROM users WHERE token = :token");
+        $stmt->bindValue(":token", $token);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ($user) {
-                $_SESSION['user_id'] = $user->id;
-                $_SESSION['username'] = $user->username;
-                return true;
-            } else {
-                // Token inválido
-                setcookie("token", "", time() - 3600, "/"); // Eliminar cookie
-                // header("Location: login.php");
-                // exit();
-                echo "Token inválido!";
-                return false;
-            }
-        } else {
-            return false;
+        if ($user) {
+            self::ensureSessionStarted();
+            $_SESSION['user_id'] = $user->id;
+            $_SESSION['username'] = $user->username;
+            return true;
         }
+
+        setcookie("token", "", time() - 3600, "/");
+        return false;
     }
 
     public static function verifyJWTCookie() {
+        if (!isset($_COOKIE['jwt'])) return false;
 
-        if (isset($_COOKIE['jwt'])) {
-            $jwt = $_COOKIE['jwt'];
+        $jwt = $_COOKIE['jwt'];
+        $secret = self::getSecretKey();
 
-            $secret = self::getSecretKey();
         if (!self::verifyJWT($jwt, $secret)) {
             setcookie("jwt", "", time() - 3600, "/");
             return false;
         }
 
-            
-            $statement = ($instance = self::getInstance())->connection->prepare("SELECT id, username FROM User WHERE jwt = :jwt");
-            $statement->bindValue(":jwt", $jwt);
-            $statement->setFetchMode(PDO::FETCH_OBJ);
-            $statement->execute();
-            $user = $statement->fetch();
+        $stmt = self::getInstance()->connection->prepare("SELECT id, username FROM users WHERE jwt = :jwt");
+        $stmt->bindValue(":jwt", $jwt);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ($user) {
-                $_SESSION['user_id'] = $user->id;
-                $_SESSION['username'] = $user->username;
-                return true;
-            } else {
-                // Token inválido
-                setcookie("jwt", "", time() - 3600, "/"); // Eliminar cookie
-                echo "JWT inválido!";
-                return false;
-            }
-        } else {
-            return false;
+        if ($user) {
+            self::ensureSessionStarted();
+            $_SESSION['user_id'] = $user->id;
+            $_SESSION['username'] = $user->username;
+            return true;
         }
+
+        setcookie("jwt", "", time() - 3600, "/");
+        return false;
     }
 
     public static function isLoggedIn() {
         self::ensureSessionStarted();
-        if (!empty($_SESSION['user_id'])) {
-            return true;
-        }
-    
-        return self::verifyJWTCookie() || self::verifyTokenCookie();
+        return !empty($_SESSION['user_id']) || self::verifyJWTCookie() || self::verifyTokenCookie();
     }
-    
 
-    private static function createJWT() {
-        if (isset($_SESSION['user_id'])) {
-            // Datos para el JWT
-            $header = [
-                'alg' => 'HS256',
-                'typ' => 'JWT'
-            ];
-
-            $payload = [
-                'user_id' => $_SESSION['user_id'],
-                'username' => $_SESSION['username'],
-                'exp' => time() + (86400 * 30) // Expira en 30 días
-            ];
-
-            // Generar el JWT
-            $jwt = self::generateJWT($header, $payload, self::getSecretKey());
-            // echo "JWT generado: " . $jwt . "\n";
-
-            // Guarda el token en la base de datos
-            $statement = ($instance = self::getInstance())->connection->prepare("UPDATE User SET jwt = :jwt WHERE id = :id");
-            $statement->bindValue(':jwt', $jwt);
-            $statement->bindValue(':id', $_SESSION['user_id']);
-            $statement->execute();
-
-            return $jwt;
-        } else {
-            return null;
+    public static function exist($username) {
+        try {
+            $stmt = self::getInstance()->connection->prepare("SELECT id FROM users WHERE username = :username");
+            $stmt->bindValue(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch() !== false;
+        } catch (PDOException $e) {
+            error_log("Exist check error: " . $e->getMessage());
+            return false;
         }
     }
 
-    public static function getSecretKey() {
-        // .env file placed in the root directory
+    public static function existByEmail($email) {
+        try {
+            $stmt = self::getInstance()->connection->prepare("SELECT id FROM users WHERE email = :email");
+            $stmt->bindValue(':email', $email);
+            $stmt->execute();
+            return $stmt->fetch() !== false;
+        } catch (PDOException $e) {
+            error_log("Exist email error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    private static function getSecretKey() {
         $dotenv = Dotenv\Dotenv::createImmutable("../");
         $dotenv->load();
-        
         return $_ENV['JWT_SECRET_KEY'];
     }
 
-    // Función para generar el JWT
-    public static function generateJWT($header, $payload, $secret_key) {
-        // Codificar en Base64 URL el header y el payload
-        $header_encoded = self::base64URLEncode(json_encode($header));
-        $payload_encoded = self::base64URLEncode(json_encode($payload));
-        
-        // Crear la firma
-        $signature = hash_hmac('sha256', "$header_encoded.$payload_encoded", $secret_key, true);
-        $signature_encoded = self::base64URLEncode($signature);
-        
-        // Combinar todos los elementos en el JWT
-        return "$header_encoded.$payload_encoded.$signature_encoded";
+    private static function generateJWT($header, $payload, $secret) {
+        $headerEncoded = self::base64URLEncode(json_encode($header));
+        $payloadEncoded = self::base64URLEncode(json_encode($payload));
+        $signature = hash_hmac('sha256', "$headerEncoded.$payloadEncoded", $secret, true);
+        $signatureEncoded = self::base64URLEncode($signature);
+        return "$headerEncoded.$payloadEncoded.$signatureEncoded";
     }
 
-    // Función para verificar el JWT
-    public static function verifyJWT($jwt, $secret_key) {
-        list($header_encoded, $payload_encoded, $signature_encoded) = explode('.', $jwt);
-        $signature = self::base64URLEncode(hash_hmac('sha256', "$header_encoded.$payload_encoded", $secret_key, true));
+    private static function verifyJWT($jwt, $secret) {
+        list($headerEncoded, $payloadEncoded, $signatureEncoded) = explode('.', $jwt);
+        $expectedSig = self::base64URLEncode(hash_hmac('sha256', "$headerEncoded.$payloadEncoded", $secret, true));
 
-        if ($signature !== $signature_encoded) {
-            return false;
-        }
+        if ($signatureEncoded !== $expectedSig) return false;
 
-        // Decodificar el payload para verificar el tiempo de expiración
-        $payload = json_decode(base64_decode($payload_encoded), true);
-        if (isset($payload['exp']) && $payload['exp'] < time()) {
-            return false; // Token expirado
-        }
-        return true; // Token válido
+        $payload = json_decode(base64_decode($payloadEncoded), true);
+        return isset($payload['exp']) && $payload['exp'] > time();
     }
 
-    // Función auxiliar para codificar en Base64 URL seguro
-    public static function base64URLEncode($data) {
+    private static function base64URLEncode($data) {
         return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($data));
     }
 
-    public static function createSecureCookie($cookieName, $cookieValue, $expirationTime, $path) {
-        // Dominio (puede ser tu dominio o dejarlo vacío)
-        $domain = '';
-
-        // Secure: true para enviar solo sobre HTTPS
-        $secure = false;
-
-        // HttpOnly: true para evitar acceso desde JavaScript
-        $httponly = true;
-
-        // Configurar la cookie
+    public static function createSecureCookie($name, $value, $expires, $path = "/") {
         setcookie(
-            $cookieName,       // Nombre de la cookie
-            $cookieValue,      // Valor de la cookie
-            $expirationTime,   // Tiempo de expiración
-            $path,             // Ruta
-            $domain,           // Dominio
-            $secure,           // Secure
-            $httponly          // HttpOnly
+            $name,
+            $value,
+            $expires,
+            $path,
+            "",         // domain
+            false,      // secure (false for localhost)
+            true        // httponly
         );
     }
-
 }

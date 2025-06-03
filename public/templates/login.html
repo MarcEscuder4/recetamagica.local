@@ -23,25 +23,40 @@
 <body>
     <!-- Navbar -->
     {% include '/navbar.html' %}
-
-    <br>
     
     <!-- Contingut -->
     <div class="container mt-5 mb-5">
-        <div class="container mt-5 mb-5">
-            {% if error %}
-            <div class="alert alert-danger text-center" role="alert">
-                {{ error }}
-            </div>
-            {% endif %}
+        <div class="mb-5">
             <h1 class="text-black fw-bold">{{ "Iniciar Sesión" | trans }}</h1>
             <a href="/registro" class="register">
                 <h2 class="text-muted fs-5 link_amp">{{ "Registrarse" | trans }}</h2>
             </a>
         </div>
+        
+        <!--
+        <div class="container mb-5 justify-content-center">
+            <div class="alert alert-danger">Nombre de usuario o contraseña incorrectos.</div>
+        </div>
+        -->
+
+        <!-- Mostrar mensaje de error -->
+        {% if error %}
+            <div class="alert alert-danger text-center mb-5">
+                {{ error }}
+            </div>
+            <br>
+        {% endif %}
+
+        <!-- Mostrar mensaje de éxito -->
+        {% if success_message %}
+            <div class="alert alert-success text-center mb-5">
+                {{ success_message }}
+            </div>
+            <br>
+        {% endif %}
     
         <div>
-            <form action="/public/views/login.php" method="post">
+            <form action="/login" method="post">
                 <div class="mb-3">
                     <label for="username" class="form-label">Usuario o Correo Electrónico</label>
                     <input type="text" id="username" name="username" class="form-control" required>

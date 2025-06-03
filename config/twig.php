@@ -5,15 +5,15 @@ require_once '../vendor/autoload.php';
 // Configuración de Twig
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
-    'cache' => false, // Desactivar caché en desarrollo (en producción usa una ruta de caché)
-    'autoescape' => 'html', // Escapar automáticamente para seguridad (recomendado)
-    'debug' => true, // Activar modo debug para desarrollo
+    'cache' => false,
+    'autoescape' => 'html',
+    'debug' => true,
 ]);
 
-// Añadir extensión de depuración (solo en desarrollo)
+// Extensiones y filtros
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
-// Filtro para usar gettext {{ "Texto a traducir" | trans }}
+// Implementación para traducciones
 class GettextExtension extends \Twig\Extension\AbstractExtension {
     public function getFilters() {
         return [
@@ -21,28 +21,19 @@ class GettextExtension extends \Twig\Extension\AbstractExtension {
         ];
     }
 }
-
-// Añadir el filtro de gettext a Twig
 $twig->addExtension(new GettextExtension());
 
-// Iniciamos la sesión
+// Iniciar sesión si no está activa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Pasar variables de sesión a Twig como globales
-if (isset($_SESSION['error'])) {
-    $twig->addGlobal('error', $_SESSION['error']);
-}
-if (isset($_SESSION['success'])) {
-    $twig->addGlobal('success', $_SESSION['success']);
-}
+// PASAR TODA LA SESIÓN como variable global
+$twig->addGlobal('session', $_SESSION);
 
-// Limpiar las variables de sesión después de cargarlas
-function clearSessionMessages() {
-    unset($_SESSION['error'], $_SESSION['success']);
-}
-clearSessionMessages();
+// También pasar errores/mensajes individuales si quieres (opcional)
+$twig->addGlobal('error', $_SESSION['error'] ?? null);
+$twig->addGlobal('success_message', $_SESSION['success_message'] ?? null);
+$twig->addGlobal('success', $_SESSION['success'] ?? null);
 
-// Devolver la instancia de Twig
 return $twig;

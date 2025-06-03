@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -28,18 +24,6 @@ session_start();
     </head>
 
     <body>
-        <?php
-        if (isset($_SESSION['error'])) {
-            echo "<div class='alert alert-danger'>" . $_SESSION['error'] . "</div>";
-            unset($_SESSION['error']);
-        }
-    
-        if (isset($_SESSION['success'])) {
-            echo "<div class='alert alert-success'>" . $_SESSION['success'] . "</div>";
-            unset($_SESSION['success']);
-        }
-        ?>
-
         <!-- Navbar -->
         {% include '/navbar.html' %}
 
@@ -56,35 +40,44 @@ session_start();
                 <h1 class="text-black fw-bold">{{ "Contacto" | trans }}</h1>
                 <h2 class="text-muted fs-5">{{ "Te responderemos en el menor tiempo posible" | trans }}</h2>
             </div>
+
+            <!-- Mostrar mensaje de error -->
+            {% if error %}
+                <div class="alert alert-danger text-center mb-5">
+                    {{ error }}
+                </div>
+                <br>
+            {% endif %}
+
             <div>
                 <!-- Uso de reCAPTCHA con claves de prueba -->
                 <!-- AFEGIR A ACTION A ON S'ENVIARÀN LES DADES DEL FORM PER PROCESSAR-LES (ex. procesar_contacto.php)-->
-                <form action="" method="post" id="contactForm">
+                <form action="/login" method="POST" id="contactForm">
                     <div class="mb-3">
                         <label for="motivo" class="form-label">{{ "Motivo del Contacto" | trans }}</label>
                         <select class="form-select" id="motivo" name="motivo" required>
                             <option value="" disabled selected>{{ "Selecciona un motivo" | trans }}</option>
-                            <option value="duda">{{ "Tengo una duda" | trans }}</option>
-                            <option value="sugerencia">{{ "Quiero hacer una sugerencia" | trans }}</option>
-                            <option value="problema">{{ "Encontré un problema" | trans }}</option>
-                            <option value="colaboracion">{{ "Me gustaría colaborar" | trans }}</option>
-                            <option value="otro">{{ "Otro motivo" | trans }}</option>
+                            <option value="Duda">{{ "Tengo una duda" | trans }}</option>
+                            <option value="Sugerencia">{{ "Quiero hacer una sugerencia" | trans }}</option>
+                            <option value="Problema">{{ "Encontré un problema" | trans }}</option>
+                            <option value="Colaboracion">{{ "Me gustaría colaborar" | trans }}</option>
+                            <option value="Otro">{{ "Otro motivo" | trans }}</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="username" class="form-label">{{ "Nombre" | trans }}</label>
-                        <input type="text" id="username" name="username" class="form-control" required>
+                        <label for="username" class="form-label">{{ "Nombre completo" | trans }}</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="{{ 'Tu nombre completo' | trans }}">
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="form-label">{{ "Número de Teléfono" | trans }}</label>
-                        <input type="tel" class="form-control" id="telefono" name="telefono" pattern="[67][0-9]{8}" required>
+                        <input type="tel" class="form-control" id="telefono" name="telefono" pattern="[67][0-9]{8}" placeholder="670123456">
                         <div class="form-text invalid-feedback" id="telefonoError">
                             {{ "Introduce un número válido de 9 cifras sin espacios ni guiones." | trans }}
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">{{ "Correo Electrónico" | trans }}</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="{{ 'tu@correo.com' | trans }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="preferencia" class="form-label">{{ "Preferencia de Respuesta" | trans }}</label>
@@ -96,12 +89,12 @@ session_start();
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">{{ "Mensaje" | trans }}</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Introduce tu mensaje aquí" rows="5" required></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="mensaje" placeholder="{{ 'Introduce tu mensaje aquí...' | trans }}" rows="5" required></textarea>
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="acepto" name="acepto" required>
                         <label class="form-check-label" for="acepto">
-                            {{ "Acepto la" | trans }} <a href="/politica-privacidad" target="_blank">{{ "política de privacidad" | trans }}</a>.
+                            {{ "Acepto la" | trans }} <a href="/privacidad" target="_blank">{{ "política de privacidad" | trans }}</a>.
                         </label>
                     </div>
                     <div class="col-12 mb-3 d-flex justify-content-end gap-3">
@@ -111,13 +104,6 @@ session_start();
                 </form>
             </div>
         </div>
-        <!-- Google reCAPTCHA para web pública
-        Inserta esta clave de sitio en el código HTML que utiliza tu sitio.
-        6Ld5_RMrAAAAALFDKDx52LzMeipgv7AG6Lft0YJs
-
-        Utiliza esta clave secreta para la comunicación entre tu sitio y reCAPTCHA:
-        6Ld5_RMrAAAAACvOIbVTucsl-gBXS-vsP-D1OsAc
-        -->
 
         <br><br>
 

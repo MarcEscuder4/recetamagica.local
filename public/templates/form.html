@@ -17,37 +17,45 @@
     <link rel="stylesheet" href="../assets/css/test.css">
     <!-- Data -->
     <link rel="icon" href="/img/favicon/recetamagica.ico">
-    <title>La Receta Mágica | Formulari</title>
+    <title>La Receta Mágica | {{ "Registro" | trans }}</title>
 </head>
 
 <body>
     <!-- Navbar -->
     {% include '/navbar.html' %}
 
-    <!-- Content --> <!-- /registro -->
+    <div class="container mt-5">
+        <div class="row align-items-center">
+            <!-- Texto (izquierda en md+) -->
+            <div class="col-12 col-md-8 text-md-start text-center mb-3 mb-md-0">
+                <h1 class="text-black fw-bold">Formulario de registro</h1>
+                <h2 class="text-muted fs-5">¡Bienvenidos a La Receta Mágica!</h2>
+            </div>
+    
+            <!-- Imagen (derecha en md+) -->
+            <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
+                <img src="../img/profile/test.png" alt="Foto de perfil" class="rounded-circle img-fluid" style="max-width: 120px; height: auto;">
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Content -->
     <form action="/registro" method="POST" enctype="multipart/form-data">
         <div class="container mt-5 mb-5">
-
+            <!-- Mensaje de error si se hay algun valor incorrecto -->
             {% if error %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
                 </div>
             {% endif %}
-    
-            <div class="row align-items-center">
-                <!-- Texto: ocupa siempre 12 columnas en pantallas pequeñas, y 8 en medianas hacia arriba -->
-                <div class="col-12 col-md-8 order-2 order-md-1 mt-3 mt-md-0">
-                    <h1 class="text-black fw-bold">Formulario de registro</h1>
-                    <h2 class="text-muted fs-5">¡Bienvenidos a La Receta Mágica!</h2>
+            <!-- Mensaje de validación -->
+            {% if success_message %}
+                <div class="alert alert-success" role="alert">
+                    {{ success_message }}
                 </div>
-
-                <!-- Imagen: ocupa 4 en medianas y grandes, y se oculta en móviles -->
-                <div class="col-md-4 d-none d-md-flex justify-content-md-end">
-                    <img src="../img/profile/test.png" alt="Foto de perfil" class="rounded-circle img-fluid" style="max-width: 120px; height: auto;">
-                </div>
-            </div>
-    
-            <br><hr class="dropdown-divider"><br>
+            {% endif %}
+     
     
             <!-- Username -->
             <div class="mb-3">

@@ -34,11 +34,11 @@
         <br>
 
         <div>
-            <form action="/public/views/create_recipe.php" method="post" enctype="multipart/form-data">
+            <form action="/crear-receta/formulario-1" method="post" enctype="multipart/form-data">
 
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre de la Receta</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la receta" required>
+                    <label for="name" class="form-label">Nombre de la Receta</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Nombre de la receta" required>
                 </div>
 
                 <div class="mb-3">
@@ -50,8 +50,8 @@
                         
                 <div class="mb-3">
                     <label for="description" class="form-label">Descripción</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" maxlength="80" placeholder="Máximo 80 caracteres" required></textarea>
-                    <div class="form-text">Máximo 80 caracteres.</div>
+                    <textarea class="form-control" id="description" name="description" rows="3" maxlength="300" placeholder="Máximo 80 caracteres" required></textarea>
+                    <div class="form-text">Máximo 300 caracteres.</div>
                 </div>
 
                 <div class="row mb-3">
@@ -91,7 +91,7 @@
                                 <option value="Festiva">Festiva</option>
                                 <option value="Street Food">Street Food</option>
                                 <option value="Gourmet">Gourmet</option>
-                                <option value="Other">Otro</option>
+                                <option value="Otro">Otro</option>
                             </optgroup>
                         </select>
                         <div class="form-text">Selecciona uno o más estilos / categorías.</div>
@@ -123,13 +123,13 @@
                     <div id="ingredients-container">
                         <div class="row g-2 align-items-end mb-2 ingredient-row">
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="ingredients[${ingredientIndex}][name]" placeholder="Nombre del ingrediente" required>
+                                <input type="text" class="form-control" name="ingredients[0][name]" placeholder="Nombre del ingrediente" required>
                             </div>
                             <div class="col-md-3">
-                                <input type="number" step="0.01" min="0" class="form-control" name="ingredients[${ingredientIndex}][quantity]" placeholder="Cantidad" required>
+                                <input type="number" step="0.01" min="0" class="form-control" name="ingredients[0][quantity]" placeholder="Cantidad" required>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-select" name="ingredients[${ingredientIndex}][unit]" required>
+                                <select class="form-select" name="ingredients[0][unit]" required>
                                     <optgroup label="Unidades">
                                         <option value="Unidad">Unidad/es</option>
                                     </optgroup>
@@ -228,7 +228,7 @@
     </script>
     <!-- Cambia el subtitulo al nombre puesto en el input de nombre -->
     <script>
-        const input = document.getElementById('nombre');
+        const input = document.getElementById('name');
         const title = document.getElementById('nombreReceta');
       
         input.addEventListener('input', () => {

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tipo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/test.css">
+    <!-- Data -->
+    <link rel="icon" href="/img/favicon/recetamagica.ico">
+    <title>La Receta Mágica | {{ "Términos y Condiciones" | trans }}</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    {% include '/navbar.html' %}
+
+    <div class="container mt-5 mb-5">
+        <div class=" mb-4">
+            <h1 class="text-black fw-bold">{{ "Términos y Condiciones" | trans }}</h1>
+            <h2 class="text-muted fs-5 mb-4">{{ "Última actualización: Abril de 2025" | trans }}</h2>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mb-3">1. Aceptación de los términos</h4>
+            <p>Al acceder y utilizar La Receta Mágica, aceptas cumplir estos términos y condiciones. Si no estás de acuerdo con ellos, por favor no uses el sitio.</p>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mt-4 mb-3">2. Uso del sitio</h4>
+            <p>La Receta Mágica es una comunidad para compartir recetas de cocina de forma creativa y divertida.<br>Como usuario te comprometes a:</p>
+            <ul>
+                <li>Publicar contenido original o con derechos de uso adecuados.</li>
+                <li>Usar un lenguaje respetuoso y adecuado.</li>
+                <li>No publicar contenido ofensivo, ilegal o que viole derechos de terceros.</li>
+            </ul>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mt-4 mb-3">3. Registro y cuenta</h4>
+            <p>Para acceder a ciertas funciones debes registrarte. Eres responsable de mantener la confidencialidad de tus datos de acceso. No compartas tu cuenta con terceros.</p>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mt-4 mb-3">4. Contenido generado por el usuario</h4>
+            <p>Todo el contenido que publiques (recetas, comentarios, imágenes) es tu responsabilidad. Al publicar, concedes a La Receta Mágica el derecho no exclusivo de mostrarlo dentro de la plataforma.</p>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mt-4 mb-3">5. Sistema de puntos y rangos</h4>
+            <p>El sistema de puntos es parte del aspecto lúdico del sitio. No representa valor económico. La Receta Mágica se reserva el derecho a modificar los criterios de puntuación o rangos sin previo aviso.</p>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mt-4 mb-3">6. Política de privacidad</h4>
+            <p>Respetamos tu privacidad. Consulta nuestra <a href="/privacidad" class="link-pastel"><strong>política de privacidad</strong></a> para más información sobre cómo usamos tus datos.</p>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mt-4 mb-3">7. Modificaciones</h4>
+            <p>Estos términos pueden cambiar con el tiempo. Te avisaremos en el sitio o por correo si los cambios son importantes.</p>
+        </div>
+
+        <br>
+
+        <div class="container mb-3">
+            <h4 class="fw-bold mt-4 mb-3">8. Contacto</h4>
+            <p>¿Tienes preguntas o sugerencias? Escríbenos a <a href="mailto:soporte@recetamagica.com"><strong>soporte@recetamagica.com</strong></a>.</p>
+        </div>
+    </div>
+
+    <br><br>
+
+    <!-- Footer -->
+    {% include '/footer.html' %}
+  
+    <!-- Scripts de Bootstrap: Asegúrate de cargarlos al final para que funcionen correctamente -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <!-- Cierra el navbar desplegado al clickar fuera del elemento -->
+    <script>
+        const toggler = document.querySelector('.custom-toggler');
+        const navbar = document.getElementById('navbarSupportedContent');
+      
+        toggler.addEventListener('click', () => {
+          toggler.classList.toggle('open');
+        });
+    </script>
+    <script>
+        document.addEventListener('click', function (event) {
+          const isClickInside = navbar.contains(event.target) || toggler.contains(event.target);
+          if (!isClickInside && navbar.classList.contains('show')) {
+            toggler.click(); // Trigger collapse
+          }
+        });
+    </script>
+</body>
+</html>

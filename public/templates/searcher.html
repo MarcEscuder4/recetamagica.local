@@ -1,12 +1,9 @@
 <div>
-    <section class="container my-4">
-      <h2 class="text mb-4">
-        <a href="/recetas" class="link_amp">{{ "Buscador de Recetas" | trans }}</a>
-    </h2>
-        <label for="buscador" class="form-label"><strong> {{ "Encuentra las mejores recetas de todo internet" | trans }} </strong></label>
-        <div class="d-flex">
-            <input id="buscador" class="form-control me-2" type="search" placeholder="{{ "Receta o Ingrediente" | trans }}" aria-label="Search">
-            <button class="btn btn-pastel" type="submit">{{"Buscar" | trans }}</button>
-        </div>
-    </section>
+<form action="/recetas" method="get" class="container my-4">
+    <div class="d-flex gap-2">
+        <input name="search" class="form-control" type="search" placeholder="Buscar receta..." aria-label="Buscar receta">
+        <button class="btn btn-pastel" type="submit">Buscar</button>
+    </div>
+</form>
+
 </div>

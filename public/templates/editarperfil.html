@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+{% if user.lang == "en" %}
+    <html lang="en">
+{% elseif user.lang == "cat" %}
+    <html lang="cat">
+{% else %}
+    <html lang="es">
+{% endif %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tipo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/test.css">
+    <!-- Data -->
+    <link rel="icon" href="/img/favicon/recetamagica.ico">
+    <title>La Receta Mágica | {{ "Perfil" | trans }}</title>
+</head>
+<body>
+    {% include '/navbar.html' %}
+
+    <div class="container mt-5">
+        <h1 class="fw-bold">{{ "Editar Perfil" | trans }}</h1>
+        <a href="/perfil" class="perfil">
+            <h2 class="text-muted fs-5">{{ user.username }}</h2>
+        </a>
+    </div>
+
+    <form action="/editar-perfil" method="POST" enctype="multipart/form-data">
+        <div class="container my-5">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="row g-0">
+                    <!-- Avatar / foto -->
+                    <div class="col-md-4 text-center p-4 bg-light rounded-start">
+                        <img id="avatarPreview"
+                            src="{{ user.avatar ?: '/img/profile/test.png' }}"
+                            class="rounded-circle img-fluid"
+                            style="width:150px"
+                            alt="Avatar {{ user.username }}">
+
+                        <div class="mt-3">
+                            <label for="avatar" class="btn btn-outline-dark btn-sm">
+                                <i class="fas fa-camera me-1"></i>{{ "Cambiar foto" | trans }}
+                            </label>
+                            <input type="file" id="avatar" name="avatar" accept="image/*" class="d-none">
+                        </div>
+
+                        <p class="text-muted mt-3 mb-0">{{ user.name }} {{ user.surname1 }} {{ user.surname2 }}</p>
+                    </div>
+
+                    <!-- Datos editables -->
+                    <div class="col-md-8 p-4">
+                        {% if error %}
+                        <div class="alert alert-danger text-center">{{ error }}</div>
+                        {% endif %}
+                        {% if success %}
+                        <div class="alert alert-success text-center">{{ success }}</div>
+                        {% endif %}
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">Email</label>
+                            <div class="col-sm-8">
+                                <input type="email" name="email" value="{{ user.email }}" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">{{ "Nombre" | trans }}</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="name" value="{{ user.name }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">{{ "Primer apellido" | trans }}</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="surname1" value="{{ user.surname1 }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">{{ "Segundo apellido" | trans }}</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="surname2" value="{{ user.surname2 }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">{{ "Fecha de nacimiento" | trans }}</label>
+                            <div class="col-sm-8">
+                                <input type="date" name="birthdate" value="{{ user.birthdate }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">{{ "Género" | trans }}</label>
+                            <div class="col-sm-8">
+                                <select name="genre" class="form-select" required>
+                                    <option value="Mujer" {{ user.genre=="Mujer" ? "selected" }}>{{ "Mujer" | trans }}</option>
+                                    <option value="Hombre" {{ user.genre=="Hombre" ? "selected" }}>{{ "Hombre" | trans }}</option>
+                                    <option value="Prefiero no contestar" {{ user.genre=="Prefiero no contestar" ? "selected" }}>{{ "Prefiero no contestar" | trans }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">{{ "País" | trans }}</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="country" value="{{ user.country }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label fw-bold">{{ "Idioma" | trans }}</label>
+                            <div class="col-sm-8">
+                                <select name="lang" class="form-select" required>
+                                    <option value="es" {{ user.lang=="es" ? "selected" }}>Español</option>
+                                    <option value="en" {{ user.lang=='en' ? "selected" }}>English</option>
+                                    <option value="cat" {{ user.lang=='cat' ? "selected" }}>Català</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <!-- Puntos y rango (solo lectura) -->
+                        <div class="mt-4">
+                            <p class="fw-bold mb-1">
+                                <i class="fas fa-star text-warning me-1"></i>Puntos: {{ user.points }}/200
+                            </p>
+                            <span class="badge text-dark fw-semibold" style="background-color: {{ rank.color }};">
+                                <i class="fas {{ rank.icono }} me-1"></i>{{ rank.nombre }}
+                            </span>
+
+                            <div class="progress mt-2" style="height: 8px;">
+                                <div class="progress-bar" role="progressbar"
+                                    style="width: {{ (user.points / 200 * 100)|round(0, 'floor') }}%; background-color: {{ rank.color }};"
+                                    aria-valuenow="{{ user.points }}" aria-valuemin="0" aria-valuemax="200">
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-end mt-4 gap-3">
+                            <a href="/cambiar-password" class="btn btn-outline-dark">
+                                <i class="fas fa-key me-1"></i>{{ 'Cambiar contraseña'|trans }}
+                            </a>
+                            <button type="submit" class="btn btn-pastel">
+                                <i class="fas fa-save me-1"></i>{{ 'Guardar cambios'|trans }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br><br>
+
+    <!-- Footer -->
+    {% include '/footer.html' %}
+  
+    <!-- Scripts de Bootstrap: Asegúrate de cargarlos al final para que funcionen correctamente -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        const toggler = document.querySelector('.custom-toggler');
+        const navbar = document.getElementById('navbarSupportedContent');
+      
+        toggler.addEventListener('click', () => {
+          toggler.classList.toggle('open');
+        });
+    </script>
+    <script>
+        document.addEventListener('click', function (event) {
+            const isClickInside = navbar.contains(event.target) || toggler.contains(event.target);
+            if (!isClickInside && navbar.classList.contains('show')) {
+            toggler.click(); // Trigger collapse
+            }
+        });
+    </script>
+    <script>
+        document.getElementById('avatar').addEventListener('change', function (e) {
+            const [file] = this.files;
+            if (file) {
+                document.getElementById('avatarPreview').src = URL.createObjectURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

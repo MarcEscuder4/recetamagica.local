@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tipo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/creareceta.css">
+    <!-- Data -->
+    <link rel="icon" href="/img/favicon/recetamagica.ico">
+    <title>La Receta Mágica | Crear Receta</title>
+</head>
+<body>
+    {% include '/navbar.html' %}
+
+    <div class="container mt-5 mb-5">
+        <div class="mb-4">
+            <h1 class="text-black fw-bold">{{ "Resumen de la Receta" | trans }}</h1>
+            <h2 id="nombreReceta" class="text-muted fs-5 mb-4">{{ recipeDraft.name }}</h2>
+        </div>
+
+
+        <div class="card mb-4 p-4">
+    
+    <p><strong>Nombre:</strong> {{ recipeDraft.name }}</p>
+    <p><strong>Descripción:</strong> {{ recipeDraft.description }}</p>
+    <p><strong>Dificultad:</strong> {{ recipeDraft.difficulty }}</p>
+    <p><strong>Tiempo estimado:</strong> {{ recipeDraft.total_time }}</p>
+
+<h4 class="mt-4">Pasos:</h4>
+{% for step in recipeSteps %}
+    <div class="mb-3 border p-3 rounded">
+        <h5 class="fw-bold">Paso {{ loop.index }}</h5>
+        <p><strong>Título:</strong> {{ step.title }}</p>
+        <p><strong>Descripción:</strong> {{ step.description }}</p>
+        
+        {% if step.minutes or step.seconds %}
+            <p><strong>Tiempo:</strong> {{ step.minutes|default(0) }}m {{ step.seconds|default(0) }}s</p>
+        {% endif %}
+        
+        {% if step.ingredients is defined and step.ingredients|length > 0 %}
+            <p><strong>Ingredientes usados:</strong> 
+                {{ step.ingredients|join(', ') }}
+            </p>
+        {% endif %}
+        
+        {% if step.photo %}
+            <img src="{{ step.photo }}" alt="Paso {{ loop.index }} imagen" class="img-fluid mt-2" style="max-height: 200px;">
+        {% endif %}
+    </div>
+{% endfor %}
+
+</div>
+
+
+
+
+<form action="/crear-receta/guardar" method="post">
+    <input type="hidden" name="confirmar" value="1">
+    <button type="submit" class="btn btn-success">Confirmar y guardar receta</button>
+</form>
+
+
+    </div>
+        <br>
+
+    {% include '/footer.html' %}
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

@@ -1,99 +1,89 @@
 <?php
+declare(strict_types=1);
 session_start();
 
-// Cargamos el archivo gettext
+require_once __DIR__ . '/../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
+$dotenv->safeLoad();
 require_once __DIR__ . '/../config/locale.php';
 
+/* ───────────────────── Helpers ───────────────────── */
+function cleanPath(string $uri): string {
+    $path = rawurldecode(parse_url($uri, PHP_URL_PATH));
+    $path = rtrim($path, '/');
+    return $path === '' ? '/' : strtolower($path);
+}
 
-// Instància del Routing
-$request = strtok($_SERVER['REQUEST_URI'], '?');
-$viewDir = '/views/';
-
-// Funció per redirigir
-function redirect($url) {
-    header("Location: $url");
-    exit();
+function view(string $file, array $data = []): void {
+    extract($data); // Extrae variables como $recipeId
+    require __DIR__ . '/views/' . $file;
+    exit;
 }
 
 
-// Definició del Routing
-if (preg_match('/^\/recetas\/(\d+)$/', $request, $matches)) {
+function auth(string $file): void {
+    require __DIR__ . '/../' . $file; 
+}
 
-    $idPajaro = $matches[1]; // Obtienes el ID de la receta
-    require __DIR__ . $viewDir . 'receta.php';
 
-}  elseif (preg_match('/^\/admin\/receta\/(\d+)$/', $request, $matches)) {
 
-    $idPajaro = $matches[1];
-    if (SessionController::isLoggedIn()) {
-        require __DIR__ . $viewDir . 'adminRM.php';
+/* ───────────────────── Routing ───────────────────── */
+$request = cleanPath($_SERVER['REQUEST_URI']);
 
-    } else {
-        redirect("/");
+/* 1) Rutas con parámetro vía RegEx */
+if (preg_match('#^/recetas/(\d+)$#', $request, $m)) {
+    $recipeId = (int)$m[1];
+    $recipe = RecipeController::getRecipeById($recipeId);
+    
+    if (!$recipe) {
+        echo "Receta no encontrada.";
+        exit;
     }
 
-} else {
-    switch ($request) {
-        case '':
-            require __DIR__ . $viewDir . 'home.php';
-            break;
-        case '/':
-            require __DIR__ . $viewDir . 'home.php';
-            break;
-        case '/registro':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                require_once __DIR__ . '/../src/controller/apiController/SessionController.php';
-                $result = SessionController::userSignUp($_POST);
-        
-                if ($result === true) {
-                    // Registro exitoso → redirigir
-                    header("Location: /login");
-                    exit();
-                } else {
-                    // Mostrar error al usuario (puedes almacenarlo en sesión para mostrarlo en form.php)
-                    $_SESSION['signup_error'] = $result;
-                    header("Location: /registro");
-                    exit();
-                }
-            } else {
-                require __DIR__ . $viewDir . 'form.php';
-            }
-            break;                       
-        case '/login':
-            require __DIR__ . $viewDir . 'login.php';
-            break;
-        case '/perfil':
-            if (SessionController::isLoggedIn()) {
-                require __DIR__ . $viewDir . 'perfil.php';
-            } else {
-                redirect("/login");
-            }
-            break;
-        case '/blog':
-            require __DIR__ . $viewDir . 'blog.php';
-            break;
-        case '/contacto':
-            require __DIR__ . $viewDir . 'contact.php';
-            break; 
-        case '/desafios':
-            require __DIR__ . $viewDir . 'desafios.php';
-            break;
-        case '/crear-receta/formulario1':
-            require __DIR__ . $viewDir . 'steps.php';
-            break;
-        case '/crear-receta/formulario2':
-            require __DIR__ . $viewDir . 'steps2.php';
-            break;
-        case '/test':
-            require __DIR__ . $viewDir . 'test.php';
-            break;
-        case '/example':
-            require __DIR__ . $viewDir . 'example.php';
-            break;
-        case 'not-found':
-            default:
-                http_response_code(404);
-                require __DIR__ . $viewDir . '404.php';
-            break;
-    }
+    view('recipe_show.php', [
+        'recipeId' => $recipeId,
+        'recipe' => $recipe
+    ]);
+}
+
+
+if (preg_match('#^/admin/receta/(\d+)$#', $request, $m)) {
+    $recipeId = (int)$m[1];
+    auth('adminRM.php');
+}
+
+/* 2) Rutas simples */
+switch ($request) {
+    case '/':                      view('home.php');               break;
+    case '/registro':              view('form.php');               break;
+    case '/login':                 view('login.php');              break;
+    case '/perfil':                view('profile.php');            break;
+    case '/editar-perfil':         view('editarperfil.php');       break;
+    case '/logout':
+        SessionController::userLogout();
+        header('Location: /login?logout=1'); exit;
+    case '/recetas':               view('recipes.php');            break;
+
+    /* ── Wizard Crear Receta ───────────────────────── */
+    case '/crear-receta/formulario-1':  view('firstformstep.php');  break;
+    case '/crear-receta/formulario-2':
+        auth('src/controller/apiController/secondformstep.php');
+                                                                    break;
+
+    case '/crear-receta/confirmar':     view('stepsend.php');       break;
+    case '/crear-receta/guardar':       view('save_recipe.php');    break;
+
+    /* ── Otros ─────────────────────────────────────── */
+    case '/blog':        view('blog.php');                break;
+    case '/blog/tendencias-culinarias':        view('blogtc.php');                break;
+    case '/contacto':    view('contact.php');             break;
+    case '/desafios':    view('desafios.php');            break;
+    case '/terminos':    view('terminoscondiciones.php'); break;
+    case '/privacidad':  view('pprivacidad.php');         break;
+    case '/test':        view('test.php');                break;
+    case '/example':     view('example.php');             break;
+
+    default:
+        http_response_code(404);
+        view('404.php');
 }

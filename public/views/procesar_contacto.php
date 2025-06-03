@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mensaje = $_POST['mensaje'];
 
     // Capturar el valor del reCAPTCHA
-    $recaptchaResponse = $_POST['g-recaptcha-response'];
+    $recaptchaResponse = $_POST['recaptcha_response'];
 
     // La clave secreta proporcionada por Google (no la compartas)
     $secretKey = "TU_CLAVE_SECRETA";
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Si la validación es exitosa, continuar con el procesamiento del formulario
         // Ejemplo: Enviar un correo electrónico
 
-        $to = "mescudero@elpuig.xeill.net"; // Dirección de correo a la que se enviará el formulario
+        $to = "mescuder@elpuig.xeill.net"; // Dirección de correo a la que se enviará el formulario
         $subject = "Nuevo mensaje de contacto de " . $nombre;
         $message = "
         <html>

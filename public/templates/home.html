@@ -27,7 +27,7 @@
     <!-- Caroussel -->
     {% include 'caroussel.html' %}
 
-    <br>
+    <br>    <br>
   
     <!-- Barra buscador -->
     {% include 'searcher.html' %}
@@ -35,7 +35,7 @@
     <br>
   
     <!-- Phrases -->
-    {% include '/phrases.html' %}
+    {% include 'phrases.html' with { phrase: phrase1, author: author1 } %}
      
     <br>
     <!--
@@ -100,7 +100,7 @@
 
     <br>
     <!-- Phrases -->
-    {% include '/phrases.html' %}
+    {% include 'phrases.html' with { phrase: phrase2, author: author2 } %}
     <br>
 
 

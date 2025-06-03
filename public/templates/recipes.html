@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tipo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/test.css">
+    <!-- Data -->
+    <link rel="icon" href="/img/favicon/recetamagica.ico">
+    <title>La Receta Mágica | {{ "Recetas" | trans }}</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    {% include '/navbar.html' %}
+
+    <div class="container mt-5 mb-3">
+        <h1 class="text-black fw-bold">{{ "Recetas" | trans }}</h1>
+        <h2 class="text-muted fs-5">{{ "Las mejores recetas de la plataforma" | trans }}</h2>
+    </div>
+
+   <!-- Barra buscador -->
+<section class="container my-4">
+    <form method="GET" action="/recetas" class="d-flex gap-2">
+        <input 
+            name="search"
+            id="buscador"
+            class="form-control"
+            type="search"
+            placeholder="{{ 'Receta o Ingrediente' | trans }}"
+            value="{{ searchQuery }}"
+            aria-label="Search"
+        >
+
+    <a href="/recetas" class="btn btn-outline-secondary">
+        Limpiar
+    </a>
+
+
+        <button class="btn btn-pastel" type="submit">{{ 'Buscar' | trans }}</button>
+    </form>
+</section>
+
+
+
+<br><br>
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for recipe in recipes %}
+            <div class="col">
+                <div class="card h-100 shadow-sm rounded">
+                {% if recipe.photo %}
+<img src="{{ recipe.photo }}" class="card-img-top" alt="Foto de {{ recipe.name }}" style="width: 100%; height: 200px; object-fit: cover; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem;">
+                {% endif %}
+<div class="card-body d-flex flex-column">
+    <h5 class="card-title">{{ recipe.name }}</h5>
+    <p class="card-text text-muted flex-grow-1">{{ recipe.description | slice(0, 120) ~ '...' }}</p>
+
+    <ul class="list-unstyled  mb-2">
+        <li><strong>Dificultad:</strong> {{ recipe.difficulty }}</li>
+        <li><strong>Tiempo total:</strong> {{ recipe.total_time }} min</li>
+        <br>
+    </ul>
+
+        <div class="d-flex justify-content-between text-muted small mb-3">
+        <span><i class="fa fa-eye"></i> {{ recipe.views }}</span>
+        <span><i class="fa fa-heart"></i> {{ recipe.likes }}</span>
+    </div>
+
+    <ul> 
+    </ul>
+
+    <a href="/recetas/{{ recipe.id }}" class="btn btn-pastel mt-auto">Ver receta</a>
+</div>
+                </div>
+            </div>
+            {% else %}
+            <p>No hay recetas todavía.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <br><br>
+
+    <!-- Footer -->
+    {% include '/footer.html' %}
+  
+    <!-- Scripts de Bootstrap: Asegúrate de cargarlos al final para que funcionen correctamente -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        const toggler = document.querySelector('.custom-toggler');
+        const navbar = document.getElementById('navbarSupportedContent');
+      
+        toggler.addEventListener('click', () => {
+          toggler.classList.toggle('open');
+        });
+      </script>
+      <script>
+        document.addEventListener('click', function (event) {
+          const isClickInside = navbar.contains(event.target) || toggler.contains(event.target);
+          if (!isClickInside && navbar.classList.contains('show')) {
+            toggler.click(); // Trigger collapse
+          }
+        });
+      </script>
+</body>
+</html>

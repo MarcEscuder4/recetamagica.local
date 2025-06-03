@@ -8,144 +8,138 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Tipo -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
+    <!-- CSS + Favicon -->
     <link rel="stylesheet" href="../assets/css/creareceta.css">
-    <!-- Data -->
     <link rel="icon" href="/img/favicon/recetamagica.ico">
     <title>La Receta Mágica | Crear Receta</title>
+
+    {#–– ①  Ingredientes serializados para JS ––#}
+    <script id="ingredients-data" type="application/json">
+        {{ ingredients|json_encode|raw }}
+    </script>
 </head>
 
 <body>
     {% include '/navbar.html' %}
 
-    <div class="container mt-5 mb-5">
-        <div class="mb-4">
-            <h1 class="text-black fw-bold">{{ "Crear Receta" | trans }}</h1>
-            <h2 id="nombreReceta" class="text-muted fs-5 mb-4">{{ "Nombre de la receta" | trans }}</h2>
-        </div>
-
-        <br>
-
-        <div id="step-section">
-            <h4>Descripción Paso A Paso</h4>
-        </div>
-
-        <div id="steps-container"></div>
-
-        <br>
-
-        <div class="mb-3 d-flex justify-content-end gap-3">
-            <button type="button" class="btn btn-outline-dark" id="del-step-btn">- Eliminar paso</button>
-            <div class="vr"></div>
-            <button type="button" class="btn btn-pastel" id="add-step-btn">+ Añadir paso</button>
-        </div>
-
-        <br><br>
-
-        <div class="row mb-3">
-            <div class="col-md-6 d-grid">
-                <button type="reset" class="btn btn-outline-dark">{{ "Limpiar" | trans }}</button>
+    <form action="/crear-receta/formulario-2" method="post" enctype="multipart/form-data">
+        <div class="container mt-5 mb-5">
+            <div class="mb-4">
+                <h1 class="text-black fw-bold">{{ "Crear Receta" | trans }}</h1>
+                <h2 id="nombreReceta" class="text-muted fs-5 mb-4">{{ "Nombre de la receta" | trans }}</h2>
             </div>
-            <div class="col-md-6 d-grid">
-                <button type="submit" class="btn btn-pastel">{{ "Subir receta" | trans }}</button>
+
+            <div id="step-section"><h4>Descripción Paso a Paso</h4></div>
+            <div id="steps-container"></div>
+
+            <div class="mb-3 d-flex justify-content-end gap-3">
+                <button type="button" class="btn btn-outline-dark" id="del-step-btn">- Eliminar paso</button>
+                <div class="vr"></div>
+                <button type="button" class="btn btn-pastel" id="add-step-btn">+ Añadir paso</button>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6 d-grid"><button type="reset" class="btn btn-outline-dark">Limpiar</button></div>
+                <div class="col-md-6 d-grid"><button type="submit" class="btn btn-pastel">Subir receta</button></div>
             </div>
         </div>
-    </div>
-
-    <br>
+    </form>
 
     {% include '/footer.html' %}
 
-    <!-- Bootstrap scripts -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
     <script>
+        /* ---------- helpers ---------- */
+        const INGREDIENTS = JSON.parse(document.getElementById('ingredients-data').textContent);
         let stepIndex = 0;
 
-        document.getElementById('add-step-btn').addEventListener('click', function () {
-            const container = document.getElementById('steps-container');
+        function timerToggle(index){
+            document
+                .getElementById(`step-timer-${index}`)
+                .addEventListener('change',function(){
+                    this.closest('.row')
+                        .querySelectorAll('.timer-fields')
+                        .forEach(f=>f.style.display = this.checked ? 'block':'none');
+                });
+        }
+
+        function optionHtml(){
+            return INGREDIENTS.map(i=>`<option value="${i.id}">${i.name}</option>`).join('');
+        }
+
+        /* ---------- añadir / eliminar ---------- */
+        function addStep(){
+            const c = document.getElementById('steps-container');
             const step = document.createElement('div');
-            step.classList.add('step-block', 'border', 'p-3', 'mb-3');
+            step.className = 'step-block border p-3 mb-3';
             step.dataset.index = stepIndex;
 
             step.innerHTML = `
-                <h5 class="text-muted">Paso ${stepIndex + 1}</h5>
+                <h5 class="text-muted">Paso ${stepIndex+1}</h5>
+
                 <div class="mb-3">
                     <label class="form-label">Título del paso</label>
                     <input type="text" class="form-control" name="steps[${stepIndex}][title]" required>
                 </div>
 
-                <br>
-
                 <div class="mb-3">
-                    <label class="form-label">Foto (Opcional)</label>
+                    <label class="form-label">Foto (opcional)</label>
                     <input type="file" class="form-control" name="steps[${stepIndex}][photo]" accept="image/*">
+                    <div class="alert alert-secondary mt-2 p-2 text-center">
+                        <strong>Una foto descriptiva ayuda a los usuarios a replicar la receta.</strong>
+                    </div>
                 </div>
-                <div class="alert alert-secondary d-flex justify-content-center" role="alert">
-                    <strong>Subir una foto de calidad y descriptiva ayudará a los usuarios a replicar la receta con mayor precisión.</strong>
-                </div>
-
-                <br>
 
                 <div class="mb-3">
                     <label class="form-label">Descripción</label>
                     <textarea class="form-control" name="steps[${stepIndex}][description]" rows="3" required></textarea>
                 </div>
 
-                <br>
-
                 <div class="row align-items-center mb-3">
                     <div class="col-md-6">
                         <div class="form-check form-switch">
-                            <input class="form-check-input timer-toggle" type="checkbox" id="step-timer-${stepIndex}">
-                            <label class="form-check-label" for="step-timer-${stepIndex}">¿Este paso requiere temporizador?</label>
+                            <input class="form-check-input" type="checkbox" id="step-timer-${stepIndex}">
+                            <label class="form-check-label" for="step-timer-${stepIndex}">¿Requiere temporizador?</label>
                         </div>
                     </div>
-                    <div class="col-3 timer-fields" style="display: none;">
+                    <div class="col-3 timer-fields" style="display:none;">
                         <label class="form-label">Minutos</label>
-                        <input type="number" min="0" class="form-control" name="steps[${stepIndex}][minutes]" placeholder="0">
+                        <input type="number" min="0" class="form-control" name="steps[${stepIndex}][minutes]">
                     </div>
-                    <div class="col-3 timer-fields" style="display: none;">
+                    <div class="col-3 timer-fields" style="display:none;">
                         <label class="form-label">Segundos</label>
-                        <input type="number" min="0" max="59" class="form-control" name="steps[${stepIndex}][seconds]" placeholder="00">
+                        <input type="number" min="0" max="59" class="form-control" name="steps[${stepIndex}][seconds]">
                     </div>
                 </div>
-
-                <br>
 
                 <div class="mb-3">
                     <label class="form-label">Ingredientes usados</label>
                     <select multiple class="form-select" name="steps[${stepIndex}][ingredients][]">
-                        <!-- Opciones dinámicas -->
+                        ${optionHtml()}
                     </select>
                 </div>
             `;
 
-            container.appendChild(step);
-            attachTimerToggle(stepIndex);
+            c.appendChild(step);
+            timerToggle(stepIndex);
             stepIndex++;
-        });
-
-        document.getElementById('del-step-btn').addEventListener('click', function () {
-            const container = document.getElementById('steps-container');
-            if (container.lastElementChild) {
-                container.removeChild(container.lastElementChild);
-                stepIndex--;
-            }
-        });
-
-        function attachTimerToggle(index) {
-            document.getElementById(`step-timer-${index}`).addEventListener('change', function () {
-                const timerFields = this.closest('.row').querySelectorAll('.timer-fields');
-                timerFields.forEach(f => f.style.display = this.checked ? 'block' : 'none');
-            });
         }
+
+        document.getElementById('add-step-btn').addEventListener('click', addStep);
+        document.getElementById('del-step-btn').addEventListener('click',()=>{
+            const c=document.getElementById('steps-container');
+            if(c.lastElementChild){ c.removeChild(c.lastElementChild); stepIndex--; }
+        });
+
+        /* ---------- generar los pasos iniciales ---------- */
+        const initialSteps={{ numSteps|default(1) }};
+        for(let i=0;i<initialSteps;i++){ addStep(); }
     </script>
 </body>
 </html>

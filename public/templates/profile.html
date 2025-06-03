@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+{% if user.lang == "en" %}
+    <html lang="en">
+{% elseif user.lang == "cat" %}
+    <html lang="cat">
+{% else %}
+    <html lang="es">
+{% endif %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,100 +30,177 @@
     <!-- Navbar -->
     {% include '/navbar.html' %}
 
-    <!-- Content -->
-    <form action="/ruta-de-registro" method="POST" enctype="multipart/form-data">
-        <div class="container mt-5 mb-5">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="text-black fw-bold">Perfil</h1>
-                    <h2 class="text-muted fs-5">{{ users.username }}</h2>
-                </div>
-                <div class="col-md-4 d-flex justify-content-end">
-                    <img src="{{ users.avatar }}" alt="Foto de perfil" class="rounded-circle" width="120" height="120">
-                </div>
+    <div class="container mt-5">
+            <!-- Texto (izquierda en md+) -->
+            <div class="col-12 col-md-8 text-md-start text-center mb-3 mb-md-0">
+                <h1 class="text-black fw-bold">Perfil</h1>
+                <h2 class="text-muted fs-5">{{ user.username }}</h2>
             </div>
-
-        <br><hr class="dropdown-divider"><br>
-
-    <!-- Aquí empieza el formulario dentro del mismo container -->
-    <form action="/ruta-de-registro" method="POST" enctype="multipart/form-data">
-        <div class="form-floating mb-3">
-            <div class="mb-3">
-                <label for="username" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control required" id="username" placeholder="{{ users.username }}">
-            </div>
-        </div>
-        <div class="form-floating mb-3">
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control required" id="email" placeholder="username@email.com">
-            </div>
-        </div>
-        <div class="form-floating mb-3">
-            <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control required" id="password">
-            </div>
-        </div>
-        <div class="form-floating mb-3">
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
-                <input type="password" class="form-control required" id="confirmPassword">
-            </div>
-        </div>
-
-        <br>
-        <hr class="dropdown-divider">
-        <br>
-
-        <div class="mb-3">
-            <label for="fechaNacimiento" class="form-label required">Fecha de Nacimiento</label>
-            <input type="date" id="fechaNacimiento" class="form-control">
-        </div>
-        <div>
-            <label for="exampleInputPassword1" class="form-label">Género</label>
-            <select class="form-select" aria-label="Default select example">
-                <option value="1">Mujer</option>
-                <option value="2">Hombre</option>
-                <option value="3" selected>Prefiero no contestar</option>
-            </select>
-        </div>
-
-        <br>
-        <hr class="dropdown-divider">
-        <br>
-
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Foto de perfil</label>
-            <input class="form-control" type="file" id="formFile">
-        </div>
-
-        <br>
-        <hr class="dropdown-divider">
-        <br>
-
-        <div class="col-12 mb-3">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                <label class="form-check-label" for="invalidCheck">
-                    Confirmar los cambios
-                </label>
-                <div class="invalid-feedback">
-                    Para poder aplicar los cambios primero debe confirmar la casilla.
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 mb-3 d-flex justify-content-end">
-            <button class="btn btn-outline-dark me-3" type="reset">Limpiar</button>
-            <button class="btn btn-pastel" type="submit">Registrarse</button>
-        </div>
-
-
     </div>
-    </form>
-<br><br>
+    
+    <div class="container mt-5 mb-5">
+        <div class="card shadow-lg rounded-4 border-0">
+            <div class="row g-0">
+                <!-- Avatar -->
+                <div class="col-md-4 text-center p-4 bg-light rounded-start">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar|default('test.png') }}" class="rounded-circle img-fluid" style="width: 150px;" alt="Avatar de {{ user.username }}">
+                    {% else %}
+                        <img src="../img/profile/test.png" class="rounded-circle img-fluid" style="width: 150px;" alt="Avatar por defecto">
+                    {% endif %}
+                    <h3 class="mt-3">{{ user.username }}</h3>
+                    <p class="text-muted">{{ user.name }} {{ user.surname1 }} {{ user.surname2 }}</p>
+                </div>
+    
+                <!-- Info -->
+                <div class="col-md-8 p-4">
+                    <h4 class="mb-4"><i class="fas fa-id-card me-2"></i>Información personal</h4>
+    
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Email</div>
+                        <div class="col-sm-8">{{ user.email }}</div>
+                    </div>
+    
+                    {% if user.role != "user" %}
+                        <div class="row mb-3">
+                            <div class="col-sm-4 fw-bold">Rol</div>
+                            <div class="col-sm-8">{{ user.role }}</div>
+                        </div>
+                    {% endif %}
 
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Fecha de nacimiento</div>
+                        <div class="col-sm-8">{{ user.birthdate }}</div>
+                    </div>
+    
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Género</div>
+                        <div class="col-sm-8">{{ user.genre }}</div>
+                    </div>
+    
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">País</div>
+                        <div class="col-sm-8">{{ user.country }}</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">Idioma
+                    </div>
+                        {% if user.lang == "en" %}
+                            <div class="col-sm-8">{{ "Inglés" | trans }}</div>
+                        {% elseif user.lang == "cat" %}
+                            <div class="col-sm-8">{{ "Catalán" | trans }}</div>
+                        {% else %}
+                            <div class="col-sm-8">{{ "Español" | trans }}</div>
+                        {% endif %}
+                    </div>
+
+                    <br>
+
+                    <!-- Puntos y Rango -->
+                    <div class="mt-4">
+                        <p class="fw-bold mb-1">
+                            <i class="fas fa-star text-warning me-1"></i>Puntos: {{ user.points }}/200
+                        </p>
+                        <span class="badge text-dark fw-semibold" style="background-color: {{ rank.color }};">
+                            <i class="fas {{ rank.icono }} me-1"></i>{{ rank.nombre }}
+                        </span>
+
+                        <div class="progress mt-2" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar"
+                                style="width: {{ (user.points / 200 * 100)|round(0, 'floor') }}%; background-color: {{ rank.color }};"
+                                aria-valuenow="{{ user.points }}" aria-valuemin="0" aria-valuemax="200">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <br>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <a href="/editar-perfil" class="btn btn-pastel">Editar Perfil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br><br>
+
+    <div class="container mt-5 mb-5">
+    <h3 class="mb-4">
+        <i class="fas fa-utensils me-2 text-warning"></i>Mis Recetas
+    </h3>
+
+    <br>
+
+{% if recipes and recipes|length > 0 %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for recipe in recipes %}
+            <div class="col">
+                <div class="card h-100 shadow-lg border-0 rounded-4 overflow-hidden">
+
+                    <img src="{{ recipe.photo|default('/img/recetas/default.jpg') }}"
+                         class="card-img-top"
+                         style="max-height: 180px; object-fit: cover;"
+                         alt="Imagen de {{ recipe.name }}">
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">{{ recipe.name }}</h5>
+
+                        <p class="card-text text-muted small mb-3">
+                            {{ recipe.description|length > 100
+                                ? recipe.description[:100] ~ '...'
+                                : recipe.description }}
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center text-muted small mt-auto">
+                            <span>
+                                <i class="fas fa-eye me-1"></i>{{ recipe.views }} vistas
+                            </span>
+                            <span>
+                                <i class="fas fa-calendar-alt me-1"></i>{{ recipe.date_created|date('d/m/Y') }}
+                            </span>
+                        </div>
+
+                        <div class="mt-3 d-grid">
+                            <a href="/receta/{{ recipe.id }}" class="btn btn-sm btn-pastel mb-2">
+                                Ver receta
+                            </a>
+
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <a href="/receta/editar/{{ recipe.id }}" class="btn btn-sm btn-outline-dark w-100">
+                                        Editar
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <form action="/receta/eliminar/{{ recipe.id }}" method="POST"
+                                          onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta receta?');">
+                                        <button type="b" class="btn btn-sm btn-dark w-100">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted">Aún no has creado ninguna receta.</p>
+{% endif %}
+
+
+
+
+
+</div>
+
+    
+    <br><br>
 
     <!-- Footer -->
     {% include '/footer.html' %}

@@ -182,40 +182,24 @@ if (!empty($data['photo'])) {
     }
 
 
-   public static function getRecipeById(int $id): ?array {
+public static function getRecipeById(int $id) {
     try {
         $instance = self::getInstance();
         $pdo = $instance->connection;
 
-        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE id = :id");
-        $stmt->execute([':id' => $id]);
-        $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM recipes WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
 
-        if (!$recipe) return null;
-
-        // Evita colisión con steps (int)
-        if (isset($recipe['steps'])) {
-            $recipe['num_steps'] = $recipe['steps'];
-            unset($recipe['steps']);
-        }
-
-        // Ingredientes
-        $stmtIng = $pdo->prepare("SELECT * FROM recipe_ingredients WHERE recipe_id = :id");
-        $stmtIng->execute([':id' => $id]);
-        $recipe['ingredients'] = $stmtIng->fetchAll(PDO::FETCH_ASSOC);
-
-        // Pasos
-        $stmtSteps = $pdo->prepare("SELECT * FROM recipe_steps WHERE recipe_id = :id ORDER BY step_number ASC");
-        $stmtSteps->execute([':id' => $id]);
-        $recipe['steps'] = $stmtSteps->fetchAll(PDO::FETCH_ASSOC);
-
-        return $recipe;
+        return $stmt->fetch(PDO::FETCH_ASSOC);
 
     } catch (PDOException $e) {
         error_log("Error al obtener receta por ID: " . $e->getMessage());
         return null;
     }
 }
+
 
 
 

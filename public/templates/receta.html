@@ -1,61 +1,206 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Tipo -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="../assets/css/test.css">
-    <!-- Data -->
-    <link rel="icon" href="/img/favicon/recetamagica.ico">
-    <title>La Receta Mágica | {{ "Recetas" | trans }}</title>
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Receta Mágica | {{ recipe.name }}</title>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar&family=Walter+Turncoat&display=swap" rel="stylesheet" />
+
+    <!-- CSS propio -->
+    <link rel="stylesheet" href="../assets/css/test.css" />
+    <link rel="icon" href="/img/favicon/recetamagica.ico" />
+
+    <style>
+      /* Sidebar styling */
+      #sidebar {
+        position: sticky;
+        top: 80px; /* Ajusta según altura navbar */
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        padding-right: 15px;
+        border-right: 1px solid #ddd;
+      }
+      #sidebar ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      #sidebar ul li {
+        margin-bottom: 10px;
+      }
+      #sidebar ul li a {
+        text-decoration: none;
+        color: #FF6F91;
+        font-weight: 600;
+      }
+      #sidebar ul li a:hover {
+        text-decoration: underline;
+      }
+      /* Espacio entre secciones de pasos */
+      .step-section {
+        padding-top: 60px;
+        margin-bottom: 50px;
+        border-bottom: 1px solid #000000;
+      }
+
+      /* Barra personalizada color inicial */
+.progress-bar-custom {
+  background-color: #FFD1EA !important;
+  transition: background-color 0.5s ease;
+}
+
+/* Color cuando queda 25% o menos */
+.progress-bar-danger {
+  background-color: #FF6F91 !important;
+}
+
+    </style>
+</head>
 <body>
-    <!-- Navbar -->
     {% include '/navbar.html' %}
 
-    <div class="container mt-5 mb-5">
-        <h1 class="text-black fw-bold">{{ "Recetas" | trans }}</h1>
-        <a href="/form" class="register">
-            <h2 class="text-muted fs-5">{{ recipe.name }}</h2>
-        </a>
+    <div class="container my-5">
+        <h1 class="fw-bold">{{ recipe.name }}</h1>
+
+        <div class="row mt-4">
+            <div class="col-md-5">
+                <img src="/{{ recipe.photo }}" alt="{{ recipe.name }}" 
+                     style="width: 100%; height: 400px; object-fit: cover; object-position: center; border-radius: 0.25rem; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);" />
+            </div>
+            <div class="col-md-7">
+              <br>
+                <p><strong>Descripción:</strong><br> {{ recipe.description }}</p>
+                <p><strong>Categoría:</strong><br> {{ recipe.category }}</p>
+                <p><strong>Estilo:</strong><br> {{ recipe.style }}</p>
+                <p><strong>Dificultad:</strong> {{ recipe.difficulty }}</p>
+                <p><strong>Pasos:</strong> {{ recipe.steps }}</p>
+                <p><strong>Tiempo total (minutos):</strong> {{ recipe.total_time }}"</p>    
+            </div>
+        </div>
+
+        <br>
+        <br>        <br>
+        <br>
+
+
+        <div class="row">
+          <!-- Sidebar -->
+          <nav id="sidebar" class="col-md-3">
+            <h4>Pasos</h4>
+            <br>
+            <ul>
+              {% for i in 1..recipe.steps %}
+                <li><a href="#paso{{ i }}">Paso {{ i }}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
+
+          <!-- Contenido de pasos -->
+          <div class="col-md-9">
+            <h3>Instrucciones</h3>
+{% for i in 1..recipe.steps %}
+  <section id="paso{{ i }}" class="step-section">
+    <h4>Paso {{ i }}</h4>
+    <p>Batir las 2 yemas y 3 claras con un poquito de sal.</p>
+    <img src="/img/recipe/eggs.png" 
+         style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 0.25rem; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);" />
+    
+    {% if i == 1 %}
+    <!-- Botón iniciar y barra de progreso solo en paso 1 -->
+    <div class="mt-3">
+      <button id="startTimerBtn" class="btn btn-pastel">Iniciar</button>
     </div>
 
+    <div class="mt-3" style="display:none;" id="timerContainer">
+<div class="progress" style="height: 25px;">
+  <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated progress-bar-custom" 
+       role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
 
-
+      <div class="mt-2">
+        <span id="timerText">01:00</span>
+      </div>
+    </div>
+    {% endif %}
     <br><br>
+  </section>
+{% endfor %}
 
-    <!-- Footer -->
+          </div>
+        </div>
+    </div>
+
     {% include '/footer.html' %}
-  
-    <!-- Scripts de Bootstrap: Asegúrate de cargarlos al final para que funcionen correctamente -->
+
+    <!-- Scripts Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
     <script>
-        const toggler = document.querySelector('.custom-toggler');
-        const navbar = document.getElementById('navbarSupportedContent');
-      
-        toggler.addEventListener('click', () => {
-          toggler.classList.toggle('open');
-        });
-      </script>
-      <script>
-        document.addEventListener('click', function (event) {
-          const isClickInside = navbar.contains(event.target) || toggler.contains(event.target);
-          if (!isClickInside && navbar.classList.contains('show')) {
-            toggler.click(); // Trigger collapse
-          }
-        });
-      </script>
+      const toggler = document.querySelector('.custom-toggler');
+      const navbar = document.getElementById('navbarSupportedContent');
+      toggler.addEventListener('click', () => toggler.classList.toggle('open'));
+      document.addEventListener('click', e => {
+        if (!navbar.contains(e.target) && !toggler.contains(e.target) && navbar.classList.contains('show')) {
+          toggler.click();
+        }
+      });
+    </script>
+    <script>
+  const startBtn = document.getElementById('startTimerBtn');
+  const timerContainer = document.getElementById('timerContainer');
+  const progressBar = document.getElementById('progressBar');
+  const timerText = document.getElementById('timerText');
+
+  let timerInterval;
+  let totalTime = 60; // 3 minutos en segundos
+  let timeLeft = totalTime;
+
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+  }
+
+  function updateTimer() {
+  timeLeft--;
+  if (timeLeft < 0) {
+    clearInterval(timerInterval);
+    timerText.textContent = "¡Tiempo finalizado!";
+    progressBar.style.width = '100%';
+    progressBar.classList.remove('progress-bar-animated');
+    return;
+  }
+  timerText.textContent = formatTime(timeLeft);
+  const progressPercent = ((totalTime - timeLeft) / totalTime) * 100;
+  progressBar.style.width = progressPercent + '%';
+
+  // Cambiar color según tiempo restante
+  if (timeLeft <= totalTime * 0.25) {
+    progressBar.classList.remove('progress-bar-custom');
+    progressBar.classList.add('progress-bar-danger');
+  } else {
+    progressBar.classList.add('progress-bar-custom');
+    progressBar.classList.remove('progress-bar-danger');
+  }
+}
+
+
+  startBtn.addEventListener('click', () => {
+    startBtn.disabled = true;  // deshabilitar botón para evitar reinicios
+    timerContainer.style.display = 'block';
+    timerText.textContent = formatTime(totalTime);
+    progressBar.style.width = '0%';
+    progressBar.classList.add('progress-bar-animated');
+    timeLeft = totalTime;
+    timerInterval = setInterval(updateTimer, 1000);
+  });
+</script>
+
 </body>
 </html>

@@ -1,17 +1,17 @@
 <?php
-// Carga Twig
-$twig = require_once __DIR__ . '/../../config/twig.php';
+require_once __DIR__ . '/../../config/twig.php';
+require_once __DIR__ . '/../../src/controller/apiController/RecipeController.php';
 
-// Aquí ya no necesitas llamar a RecipeController ni hacer más lógica.
-// La variable $recipe ya fue pasada desde index.php mediante `view()` (con extract).
+// Obtener el ID de la receta desde la URL
+$id = $_GET['id'] ?? null;
 
-$recipe = RecipeController::getRecipeById($recipeId);
-echo "<pre>Resultado getRecipeById(): ";
-var_dump($recipe);
-echo "</pre>";
+if ($recipeId) {
+    $recipe = RecipeController::getRecipeById($recipeId);
 
-
-// Renderiza Twig
-echo $twig->render('receta.html', [
-    'recipe' => $recipe
-]);
+    echo $twig->render('receta.html', [
+        'recipe' => $recipe
+    ]);
+} else {
+    // Si no hay ID, redirigir o mostrar error
+    echo "Receta no encontrada.";
+}

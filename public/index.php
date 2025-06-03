@@ -33,12 +33,13 @@ $request = cleanPath($_SERVER['REQUEST_URI']);
 /* 1) Rutas con parámetro vía RegEx */
 if (preg_match('#^/recetas/(\d+)$#', $request, $m)) {
     $recipeId = (int)$m[1];
-    $recipe = RecipeController::getRecipeById($recipeId);
-    
-    if (!$recipe) {
-        echo "Receta no encontrada.";
-        exit;
-    }
+$recipe = RecipeController::getRecipeById($recipeId);
+
+if (!$recipe) {
+    echo "Receta no encontrada.";
+    exit;
+}
+
 
     view('recipe_show.php', [
         'recipeId' => $recipeId,
